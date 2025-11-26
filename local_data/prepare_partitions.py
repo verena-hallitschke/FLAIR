@@ -10,6 +10,7 @@ Also, we prepare here the dataframes for prompts
 import os
 import json
 import glob
+import xml.etree.ElementTree as ET
 from collections import namedtuple
 
 import pandas as pd
@@ -1119,7 +1120,6 @@ def adequate_16_fundoct(dataset_preparation_config: DatasetPreparationConfig):
 
 
 def adequate_17_diaretdb1(dataset_preparation_config: DatasetPreparationConfig):
-    import xml.etree.ElementTree as ET
 
     path_dataset = "17_DiaRetDB1"
     subpath_images = "documents"
