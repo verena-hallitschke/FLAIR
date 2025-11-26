@@ -23,7 +23,10 @@ from local_data.constants import (
 )
 
 
-def adequate_01_eyepacs(datasets_base_path: str = PATH_DATASETS):
+def adequate_01_eyepacs(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     # Note: if you are missing some labels for the test dataframe, you may want to check this link:
     # https://www.kaggle.com/competitions/diabetic-retinopathy-detection/discussion/16149
 
@@ -64,10 +67,13 @@ def adequate_01_eyepacs(datasets_base_path: str = PATH_DATASETS):
                 )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "01_EYEPACS.csv"))
+    df_out.to_csv(os.path.join(pretrain_dataset_output_path, "01_EYEPACS.csv"))
 
 
-def adequate_02_messidor(datasets_base_path: str = PATH_DATASETS):
+def adequate_02_messidor(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     labels_dr = {
         0: "no diabetic retinopathy",
         1: "mild diabetic retinopathy",
@@ -117,7 +123,10 @@ def adequate_02_messidor(datasets_base_path: str = PATH_DATASETS):
     )
 
 
-def adequate_03_idrid(datasets_base_path: str = PATH_DATASETS):
+def adequate_03_idrid(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     path_dataset = "03_IDRID"
     data = []
 
@@ -206,10 +215,13 @@ def adequate_03_idrid(datasets_base_path: str = PATH_DATASETS):
             )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "03_IDRID.csv"))
+    df_out.to_csv(os.path.join(pretrain_dataset_output_path, "03_IDRID.csv"))
 
 
-def adequate_03_idrid_segmentation(datasets_base_path: str = PATH_DATASETS):
+def adequate_03_idrid_segmentation(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     path_dataset = "03_IDRID"
     data = []
 
@@ -277,7 +289,10 @@ def adequate_03_idrid_segmentation(datasets_base_path: str = PATH_DATASETS):
             )
 
 
-def adequate_04_rfmid(datasets_base_path: str = PATH_DATASETS):
+def adequate_04_rfmid(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     template_diseases = {
         "DR": "diabetic retinopathy",
         "ARMD": "age-related macular degeneration",
@@ -370,10 +385,13 @@ def adequate_04_rfmid(datasets_base_path: str = PATH_DATASETS):
                 )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "04_RFMid.csv"))
+    df_out.to_csv(os.path.join(pretrain_dataset_output_path, "04_RFMid.csv"))
 
 
-def adequate_05_1000x39(datasets_base_path: str = PATH_DATASETS):
+def adequate_05_1000x39(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     categories_template = {
         "0.0.Normal": "normal",
         "0.1.Tessellated fundus": "tessellation",
@@ -437,7 +455,7 @@ def adequate_05_1000x39(datasets_base_path: str = PATH_DATASETS):
             )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "05_1000x39.csv"))
+    df_out.to_csv(os.path.join(pretrain_dataset_output_path, "05_1000x39.csv"))
 
     data = []
     for iCategory in categories_test:
@@ -459,7 +477,10 @@ def adequate_05_1000x39(datasets_base_path: str = PATH_DATASETS):
     )
 
 
-def adequate_06_DEN(datasets_base_path: str = PATH_DATASETS):
+def adequate_06_DEN(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     path_dataset = "06_DEN"
     data = []
 
@@ -493,10 +514,13 @@ def adequate_06_DEN(datasets_base_path: str = PATH_DATASETS):
                 )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "06_DEN.csv"))
+    df_out.to_csv(os.path.join(pretrain_dataset_output_path, "06_DEN.csv"))
 
 
-def adequate_07_lag(datasets_base_path: str = PATH_DATASETS):
+def adequate_07_lag(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     path_dataset = "07_LAG"
     categories_paths = ["non_glaucoma", "suspicious_glaucoma"]
     categories = ["no glaucoma", "glaucoma"]
@@ -519,10 +543,13 @@ def adequate_07_lag(datasets_base_path: str = PATH_DATASETS):
             )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "07_LAG.csv"))
+    df_out.to_csv(os.path.join(pretrain_dataset_output_path, "07_LAG.csv"))
 
 
-def adequate_08_odir5k(datasets_base_path: str = PATH_DATASETS):
+def adequate_08_odir5k(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     path_dataset = "08_ODIR-5K"
     dataframe = pd.read_csv(
         os.path.join(datasets_base_path, path_dataset, "full_df.csv")
@@ -569,7 +596,7 @@ def adequate_08_odir5k(datasets_base_path: str = PATH_DATASETS):
                     )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "08_ODIR.csv"))
+    df_out.to_csv(os.path.join(pretrain_dataset_output_path, "08_ODIR.csv"))
 
     # Test subset
     data = []
@@ -617,7 +644,10 @@ def adequate_08_odir5k(datasets_base_path: str = PATH_DATASETS):
     )
 
 
-def adequate_09_papila(datasets_base_path: str = PATH_DATASETS):
+def adequate_09_papila(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     path_dataset = "09_PAPILA"
     subpath_images = "FundusImages"
     dataframes = [
@@ -667,10 +697,13 @@ def adequate_09_papila(datasets_base_path: str = PATH_DATASETS):
             )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "09_PAPILA.csv"))
+    df_out.to_csv(os.path.join(pretrain_dataset_output_path, "09_PAPILA.csv"))
 
 
-def adequate_10_paraguay(datasets_base_path: str = PATH_DATASETS):
+def adequate_10_paraguay(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     path_dataset = "10_PARAGUAY"
     data = []
 
@@ -708,10 +741,13 @@ def adequate_10_paraguay(datasets_base_path: str = PATH_DATASETS):
             )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "10_PARAGUAY.csv"))
+    df_out.to_csv(os.path.join(pretrain_dataset_output_path, "10_PARAGUAY.csv"))
 
 
-def adequate_11_stare(datasets_base_path: str = PATH_DATASETS):
+def adequate_11_stare(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     path_dataset = "11_STARE"
     data = []
     metadata = "all-mg-codes.txt"
@@ -738,10 +774,13 @@ def adequate_11_stare(datasets_base_path: str = PATH_DATASETS):
             )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "11_STARE.csv"))
+    df_out.to_csv(os.path.join(pretrain_dataset_output_path, "11_STARE.csv"))
 
 
-def adequate_12_aria(datasets_base_path: str = PATH_DATASETS):
+def adequate_12_aria(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     path_dataset = "12_ARIA"
     categories_subpath = ["aria_a_markups", "aria_c_markups", "aria_d_markups"]
     categories = ["age-related macular degeneration", "normal", "diabetic retinopathy"]
@@ -763,10 +802,13 @@ def adequate_12_aria(datasets_base_path: str = PATH_DATASETS):
                 )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "12_ARIA.csv"))
+    df_out.to_csv(os.path.join(pretrain_dataset_output_path, "12_ARIA.csv"))
 
 
-def adequate_13_fives(datasets_base_path: str = PATH_DATASETS):
+def adequate_13_fives(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     path_dataset = "13_FIVES"
     images_subpath = [
         os.path.join("train", "Original"),
@@ -798,7 +840,10 @@ def adequate_13_fives(datasets_base_path: str = PATH_DATASETS):
     )
 
 
-def adequate_14_agar300(datasets_base_path: str = PATH_DATASETS):
+def adequate_14_agar300(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     path_dataset = "14_AGAR300"
     finding = ["microaneurysms", "diabetic retinopathy"]
     images_subpath = "img"
@@ -815,10 +860,13 @@ def adequate_14_agar300(datasets_base_path: str = PATH_DATASETS):
         )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "14_AGAR300.csv"))
+    df_out.to_csv(os.path.join(pretrain_dataset_output_path, "14_AGAR300.csv"))
 
 
-def adequate_15_aptos(datasets_base_path: str = PATH_DATASETS):
+def adequate_15_aptos(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     path_dataset = "15_APTOS"
     labels_dr = {
         0: "no diabetic retinopathy",
@@ -844,10 +892,13 @@ def adequate_15_aptos(datasets_base_path: str = PATH_DATASETS):
             )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "15_APTOS.csv"))
+    df_out.to_csv(os.path.join(pretrain_dataset_output_path, "15_APTOS.csv"))
 
 
-def adequate_16_fundoct(datasets_base_path: str = PATH_DATASETS):
+def adequate_16_fundoct(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     path_dataset = "16_FUND-OCT"
     data = []
     dict_macula = {
@@ -900,10 +951,13 @@ def adequate_16_fundoct(datasets_base_path: str = PATH_DATASETS):
         )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "16_FUND-OCT.csv"))
+    df_out.to_csv(os.path.join(pretrain_dataset_output_path, "16_FUND-OCT.csv"))
 
 
-def adequate_17_diaretdb1(datasets_base_path: str = PATH_DATASETS):
+def adequate_17_diaretdb1(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     import xml.etree.ElementTree as ET
 
     path_dataset = "17_DiaRetDB1"
@@ -945,10 +999,13 @@ def adequate_17_diaretdb1(datasets_base_path: str = PATH_DATASETS):
         )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "17_DiaRetDB1.csv"))
+    df_out.to_csv(os.path.join(pretrain_dataset_output_path, "17_DiaRetDB1.csv"))
 
 
-def adequate_18_drions_db(datasets_base_path: str = PATH_DATASETS):
+def adequate_18_drions_db(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     path_dataset = "18_DRIONS-DB"
     images_subpath = "documents"
 
@@ -964,10 +1021,13 @@ def adequate_18_drions_db(datasets_base_path: str = PATH_DATASETS):
         )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "18_DRIONS-DB.csv"))
+    df_out.to_csv(os.path.join(pretrain_dataset_output_path, "18_DRIONS-DB.csv"))
 
 
-def adequate_19_drishtigs1(datasets_base_path: str = PATH_DATASETS):
+def adequate_19_drishtigs1(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     path_dataset = "19_Drishti-GS1"
     dataframe = pd.read_excel(
         os.path.join(datasets_base_path, path_dataset, "Drishti-GS1_diagnosis.xlsx"),
@@ -994,10 +1054,13 @@ def adequate_19_drishtigs1(datasets_base_path: str = PATH_DATASETS):
                 )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "19_Drishti-GS1.csv"))
+    df_out.to_csv(os.path.join(pretrain_dataset_output_path, "19_Drishti-GS1.csv"))
 
 
-def adequate_20_e_ophta(datasets_base_path: str = PATH_DATASETS):
+def adequate_20_e_ophta(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     path_dataset = "20_E-ophta"
     labels = {"EX": "exudates", "healthy": "healthy", "MA": "microaneurysms"}
     subpath_images = [
@@ -1028,10 +1091,13 @@ def adequate_20_e_ophta(datasets_base_path: str = PATH_DATASETS):
                     )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "20_E-ophta.csv"))
+    df_out.to_csv(os.path.join(pretrain_dataset_output_path, "20_E-ophta.csv"))
 
 
-def adequate_21_g1020(datasets_base_path: str = PATH_DATASETS):
+def adequate_21_g1020(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     path_dataset = "21_G1020"
     image_subpath = "Images"
     labels = {0: "normal", 1: "glaucoma"}
@@ -1047,17 +1113,23 @@ def adequate_21_g1020(datasets_base_path: str = PATH_DATASETS):
             data.append({"image": image_path, "atributes": [], "categories": [finding]})
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "21_G1020.csv"))
+    df_out.to_csv(os.path.join(pretrain_dataset_output_path, "21_G1020.csv"))
 
 
-def adequate_22_heimed(datasets_base_path: str = PATH_DATASETS):
+def adequate_22_heimed(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     path_dataset = "22_HEI-MED"
 
     data = []
     return 1
 
 
-def adequate_23_hrf(datasets_base_path: str = PATH_DATASETS):
+def adequate_23_hrf(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     path_dataset = "23_HRF"
     data = []
 
@@ -1090,10 +1162,13 @@ def adequate_23_hrf(datasets_base_path: str = PATH_DATASETS):
         )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "23_HRF.csv"))
+    df_out.to_csv(os.path.join(pretrain_dataset_output_path, "23_HRF.csv"))
 
 
-def adequate_24_origa(datasets_base_path: str = PATH_DATASETS):
+def adequate_24_origa(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     path_dataset = "24_ORIGA"
     image_subpath = "Images"
     labels = {0: "no glaucoma", 1: "glaucoma"}
@@ -1111,10 +1186,13 @@ def adequate_24_origa(datasets_base_path: str = PATH_DATASETS):
             data.append({"image": image_path, "atributes": [], "categories": [finding]})
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "24_ORIGA.csv"))
+    df_out.to_csv(os.path.join(pretrain_dataset_output_path, "24_ORIGA.csv"))
 
 
-def adequate_25_refuge(datasets_base_path: str = PATH_DATASETS):
+def adequate_25_refuge(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     path_dataset = "25_REFUGE"
     data = []
 
@@ -1140,7 +1218,10 @@ def adequate_25_refuge(datasets_base_path: str = PATH_DATASETS):
     )
 
 
-def adequate_26_roc(datasets_base_path: str = PATH_DATASETS):
+def adequate_26_roc(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     path_dataset = "26_ROC"
 
     files = glob.glob(os.path.join(datasets_base_path, path_dataset, "*", "*", "*.jpg"))
@@ -1155,10 +1236,13 @@ def adequate_26_roc(datasets_base_path: str = PATH_DATASETS):
         )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "26_ROC.csv"))
+    df_out.to_csv(os.path.join(pretrain_dataset_output_path, "26_ROC.csv"))
 
 
-def adequate_27_brset(datasets_base_path: str = PATH_DATASETS):
+def adequate_27_brset(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     path_dataset = "27_BRSET"
     image_subpath = "fundus_photos"
     dataframe = pd.read_csv(
@@ -1241,10 +1325,13 @@ def adequate_27_brset(datasets_base_path: str = PATH_DATASETS):
             )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "27_BRSET.csv"))
+    df_out.to_csv(os.path.join(pretrain_dataset_output_path, "27_BRSET.csv"))
 
 
-def adequate_28_OIA(datasets_base_path: str = PATH_DATASETS):
+def adequate_28_OIA(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     path_dataset = "28_OIA-DDR"
     data = []
     labels_dr = {
@@ -1308,10 +1395,13 @@ def adequate_28_OIA(datasets_base_path: str = PATH_DATASETS):
                 )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "28_OIA-DDR.csv"))
+    df_out.to_csv(os.path.join(pretrain_dataset_output_path, "28_OIA-DDR.csv"))
 
 
-def adequate_29_airogs(datasets_base_path: str = PATH_DATASETS):
+def adequate_29_airogs(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     path_dataset = "29_AIROGS"
     image_subpath = "documents"  # We only have labels for train subset
     labels = {"RG": "glaucoma", "NRG": "no glaucoma"}
@@ -1333,10 +1423,13 @@ def adequate_29_airogs(datasets_base_path: str = PATH_DATASETS):
             data.append({"image": image_path, "atributes": [], "categories": [finding]})
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "29_AIROGS.csv"))
+    df_out.to_csv(os.path.join(pretrain_dataset_output_path, "29_AIROGS.csv"))
 
 
-def adequate_30_sustech(datasets_base_path: str = PATH_DATASETS):
+def adequate_30_sustech(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     path_dataset = "30_SUSTech-SYSU"
     image_subpath = "originalImages"  # We only have labels for train subset
     labels_dr = {
@@ -1384,10 +1477,13 @@ def adequate_30_sustech(datasets_base_path: str = PATH_DATASETS):
                 )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "30_SUSTech-SYSU.csv"))
+    df_out.to_csv(os.path.join(pretrain_dataset_output_path, "30_SUSTech-SYSU.csv"))
 
 
-def adequate_31_jichi(datasets_base_path: str = PATH_DATASETS):
+def adequate_31_jichi(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     path_dataset = "31_JICHI"
     image_subpath = "documents"  # We only have labels for train subset
     labels_dr = {
@@ -1434,10 +1530,13 @@ def adequate_31_jichi(datasets_base_path: str = PATH_DATASETS):
                 )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "31_JICHI.csv"))
+    df_out.to_csv(os.path.join(pretrain_dataset_output_path, "31_JICHI.csv"))
 
 
-def adequate_32_chaksu(datasets_base_path: str = PATH_DATASETS):
+def adequate_32_chaksu(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     path_dataset = "32_CHAKSU"
     subpaths = ["Train", "Test"]
     data = []
@@ -1483,10 +1582,13 @@ def adequate_32_chaksu(datasets_base_path: str = PATH_DATASETS):
                     )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "32_CHAKSU.csv"))
+    df_out.to_csv(os.path.join(pretrain_dataset_output_path, "32_CHAKSU.csv"))
 
 
-def adequate_33_dr(datasets_base_path: str = PATH_DATASETS):
+def adequate_33_dr(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     path_dataset = "33_DR1-2"
     subpaths = [
         "Cotton-wool Spots",
@@ -1518,10 +1620,13 @@ def adequate_33_dr(datasets_base_path: str = PATH_DATASETS):
             )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "33_DR1-2.csv"))
+    df_out.to_csv(os.path.join(pretrain_dataset_output_path, "33_DR1-2.csv"))
 
 
-def adequate_34_cataract(datasets_base_path: str = PATH_DATASETS):
+def adequate_34_cataract(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     path_dataset = "34_Cataract"
     subpaths = ["1_normal", "2_cataract", "2_glaucoma", "3_retina_disease"]
     transfer = {
@@ -1542,10 +1647,13 @@ def adequate_34_cataract(datasets_base_path: str = PATH_DATASETS):
             )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "34_Cataract.csv"))
+    df_out.to_csv(os.path.join(pretrain_dataset_output_path, "34_Cataract.csv"))
 
 
-def adequate_35_scardat(datasets_base_path: str = PATH_DATASETS):
+def adequate_35_scardat(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     path_dataset = "35_ScarDat"
     subpaths = ["train", "val", "test"]
     subsubsubpaths = ["positive", "negative"]
@@ -1570,10 +1678,13 @@ def adequate_35_scardat(datasets_base_path: str = PATH_DATASETS):
                 )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "35_ScarDat.csv"))
+    df_out.to_csv(os.path.join(pretrain_dataset_output_path, "35_ScarDat.csv"))
 
 
-def adequate_36_acrima(datasets_base_path: str = PATH_DATASETS):
+def adequate_36_acrima(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     path_dataset = "36_ACRIMA"
     subpaths = ["G", "noG"]
     transfer = {"G": "glaucoma", "noG": "no glaucoma"}
@@ -1595,7 +1706,10 @@ def adequate_36_acrima(datasets_base_path: str = PATH_DATASETS):
     )
 
 
-def adequate_37_DeepDRiD(datasets_base_path: str = PATH_DATASETS):
+def adequate_37_DeepDRiD(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     path_dataset = "37_DeepDRiD"
     subpath = "regular_fundus_images"
     paritions_path = ["regular-fundus-training", "regular-fundus-validation"]
@@ -1687,7 +1801,10 @@ def adequate_37_DeepDRiD(datasets_base_path: str = PATH_DATASETS):
     )
 
 
-def adequate_CGI_HRDC(datasets_base_path: str = PATH_DATASETS):
+def adequate_CGI_HRDC(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     # TASK 1
     path_dataset = "102_CGI-HRDC"
     subpath = "1-Hypertensive Classification"
@@ -1762,10 +1879,13 @@ def adequate_CGI_HRDC(datasets_base_path: str = PATH_DATASETS):
     )
 
 
-def prepare_datasets(datasets_base_path: str = PATH_DATASETS):
+def prepare_datasets(
+    datasets_base_path: str = PATH_DATASETS,
+    pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+):
     """Call the functions to prepare the pretraining datasets."""
-    if not os.path.exists(PATH_DATAFRAME_PRETRAIN):
-        os.mkdir(PATH_DATAFRAME_PRETRAIN)
+    if not os.path.exists(pretrain_dataset_output_path):
+        os.mkdir(pretrain_dataset_output_path)
     if not os.path.exists(PATH_DATAFRAME_TRANSFERABILITY):
         os.mkdir(PATH_DATAFRAME_TRANSFERABILITY)
     if not os.path.exists(PATH_DATAFRAME_TRANSFERABILITY_CLASSIFICATION):
@@ -1817,6 +1937,9 @@ def prepare_datasets(datasets_base_path: str = PATH_DATASETS):
 
     for func in dataset_functions:
         try:
-            func(datasets_base_path=datasets_base_path)
+            func(
+                datasets_base_path=datasets_base_path,
+                pretrain_dataset_output_path=pretrain_dataset_output_path,
+            )
         except Exception as e:
             print(f"Error processing dataset in function {func.__name__}: {e}")
