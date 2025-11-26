@@ -26,6 +26,7 @@ from local_data.constants import (
 def adequate_01_eyepacs(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     # Note: if you are missing some labels for the test dataframe, you may want to check this link:
     # https://www.kaggle.com/competitions/diabetic-retinopathy-detection/discussion/16149
@@ -73,6 +74,7 @@ def adequate_01_eyepacs(
 def adequate_02_messidor(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     labels_dr = {
         0: "no diabetic retinopathy",
@@ -126,6 +128,7 @@ def adequate_02_messidor(
 def adequate_03_idrid(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     path_dataset = "03_IDRID"
     data = []
@@ -221,6 +224,7 @@ def adequate_03_idrid(
 def adequate_03_idrid_segmentation(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     path_dataset = "03_IDRID"
     data = []
@@ -292,6 +296,7 @@ def adequate_03_idrid_segmentation(
 def adequate_04_rfmid(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     template_diseases = {
         "DR": "diabetic retinopathy",
@@ -391,6 +396,7 @@ def adequate_04_rfmid(
 def adequate_05_1000x39(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     categories_template = {
         "0.0.Normal": "normal",
@@ -480,6 +486,7 @@ def adequate_05_1000x39(
 def adequate_06_DEN(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     path_dataset = "06_DEN"
     data = []
@@ -520,6 +527,7 @@ def adequate_06_DEN(
 def adequate_07_lag(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     path_dataset = "07_LAG"
     categories_paths = ["non_glaucoma", "suspicious_glaucoma"]
@@ -549,6 +557,7 @@ def adequate_07_lag(
 def adequate_08_odir5k(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     path_dataset = "08_ODIR-5K"
     dataframe = pd.read_csv(
@@ -647,6 +656,7 @@ def adequate_08_odir5k(
 def adequate_09_papila(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     path_dataset = "09_PAPILA"
     subpath_images = "FundusImages"
@@ -703,6 +713,7 @@ def adequate_09_papila(
 def adequate_10_paraguay(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     path_dataset = "10_PARAGUAY"
     data = []
@@ -747,6 +758,7 @@ def adequate_10_paraguay(
 def adequate_11_stare(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     path_dataset = "11_STARE"
     data = []
@@ -780,6 +792,7 @@ def adequate_11_stare(
 def adequate_12_aria(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     path_dataset = "12_ARIA"
     categories_subpath = ["aria_a_markups", "aria_c_markups", "aria_d_markups"]
@@ -808,6 +821,7 @@ def adequate_12_aria(
 def adequate_13_fives(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     path_dataset = "13_FIVES"
     images_subpath = [
@@ -843,6 +857,7 @@ def adequate_13_fives(
 def adequate_14_agar300(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     path_dataset = "14_AGAR300"
     finding = ["microaneurysms", "diabetic retinopathy"]
@@ -866,6 +881,7 @@ def adequate_14_agar300(
 def adequate_15_aptos(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     path_dataset = "15_APTOS"
     labels_dr = {
@@ -898,6 +914,7 @@ def adequate_15_aptos(
 def adequate_16_fundoct(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     path_dataset = "16_FUND-OCT"
     data = []
@@ -957,6 +974,7 @@ def adequate_16_fundoct(
 def adequate_17_diaretdb1(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     import xml.etree.ElementTree as ET
 
@@ -1005,6 +1023,7 @@ def adequate_17_diaretdb1(
 def adequate_18_drions_db(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     path_dataset = "18_DRIONS-DB"
     images_subpath = "documents"
@@ -1027,6 +1046,7 @@ def adequate_18_drions_db(
 def adequate_19_drishtigs1(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     path_dataset = "19_Drishti-GS1"
     dataframe = pd.read_excel(
@@ -1060,6 +1080,7 @@ def adequate_19_drishtigs1(
 def adequate_20_e_ophta(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     path_dataset = "20_E-ophta"
     labels = {"EX": "exudates", "healthy": "healthy", "MA": "microaneurysms"}
@@ -1097,6 +1118,7 @@ def adequate_20_e_ophta(
 def adequate_21_g1020(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     path_dataset = "21_G1020"
     image_subpath = "Images"
@@ -1119,6 +1141,7 @@ def adequate_21_g1020(
 def adequate_22_heimed(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     path_dataset = "22_HEI-MED"
 
@@ -1129,6 +1152,7 @@ def adequate_22_heimed(
 def adequate_23_hrf(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     path_dataset = "23_HRF"
     data = []
@@ -1168,6 +1192,7 @@ def adequate_23_hrf(
 def adequate_24_origa(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     path_dataset = "24_ORIGA"
     image_subpath = "Images"
@@ -1192,6 +1217,7 @@ def adequate_24_origa(
 def adequate_25_refuge(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     path_dataset = "25_REFUGE"
     data = []
@@ -1221,6 +1247,7 @@ def adequate_25_refuge(
 def adequate_26_roc(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     path_dataset = "26_ROC"
 
@@ -1242,6 +1269,7 @@ def adequate_26_roc(
 def adequate_27_brset(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     path_dataset = "27_BRSET"
     image_subpath = "fundus_photos"
@@ -1331,6 +1359,7 @@ def adequate_27_brset(
 def adequate_28_OIA(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     path_dataset = "28_OIA-DDR"
     data = []
@@ -1401,6 +1430,7 @@ def adequate_28_OIA(
 def adequate_29_airogs(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     path_dataset = "29_AIROGS"
     image_subpath = "documents"  # We only have labels for train subset
@@ -1429,6 +1459,7 @@ def adequate_29_airogs(
 def adequate_30_sustech(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     path_dataset = "30_SUSTech-SYSU"
     image_subpath = "originalImages"  # We only have labels for train subset
@@ -1483,6 +1514,7 @@ def adequate_30_sustech(
 def adequate_31_jichi(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     path_dataset = "31_JICHI"
     image_subpath = "documents"  # We only have labels for train subset
@@ -1536,6 +1568,7 @@ def adequate_31_jichi(
 def adequate_32_chaksu(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     path_dataset = "32_CHAKSU"
     subpaths = ["Train", "Test"]
@@ -1588,6 +1621,7 @@ def adequate_32_chaksu(
 def adequate_33_dr(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     path_dataset = "33_DR1-2"
     subpaths = [
@@ -1626,6 +1660,7 @@ def adequate_33_dr(
 def adequate_34_cataract(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     path_dataset = "34_Cataract"
     subpaths = ["1_normal", "2_cataract", "2_glaucoma", "3_retina_disease"]
@@ -1653,6 +1688,7 @@ def adequate_34_cataract(
 def adequate_35_scardat(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     path_dataset = "35_ScarDat"
     subpaths = ["train", "val", "test"]
@@ -1684,6 +1720,7 @@ def adequate_35_scardat(
 def adequate_36_acrima(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     path_dataset = "36_ACRIMA"
     subpaths = ["G", "noG"]
@@ -1709,6 +1746,7 @@ def adequate_36_acrima(
 def adequate_37_DeepDRiD(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     path_dataset = "37_DeepDRiD"
     subpath = "regular_fundus_images"
@@ -1804,6 +1842,7 @@ def adequate_37_DeepDRiD(
 def adequate_CGI_HRDC(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     # TASK 1
     path_dataset = "102_CGI-HRDC"
@@ -1882,12 +1921,13 @@ def adequate_CGI_HRDC(
 def prepare_datasets(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
+    transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
 ):
     """Call the functions to prepare the pretraining datasets."""
     if not os.path.exists(pretrain_dataset_output_path):
         os.mkdir(pretrain_dataset_output_path)
-    if not os.path.exists(PATH_DATAFRAME_TRANSFERABILITY):
-        os.mkdir(PATH_DATAFRAME_TRANSFERABILITY)
+    if not os.path.exists(transferability_dataset_output_path):
+        os.mkdir(transferability_dataset_output_path)
     if not os.path.exists(PATH_DATAFRAME_TRANSFERABILITY_CLASSIFICATION):
         os.mkdir(PATH_DATAFRAME_TRANSFERABILITY_CLASSIFICATION)
     if not os.path.exists(PATH_DATAFRAME_TRANSFERABILITY_SEGMENTATION):
@@ -1898,6 +1938,7 @@ def prepare_datasets(
     dataset_functions = [
         adequate_01_eyepacs,
         adequate_02_messidor,
+        adequate_03_idrid,
         adequate_03_idrid_segmentation,
         adequate_04_rfmid,
         adequate_05_1000x39,
@@ -1940,6 +1981,7 @@ def prepare_datasets(
             func(
                 datasets_base_path=datasets_base_path,
                 pretrain_dataset_output_path=pretrain_dataset_output_path,
+                transferability_dataset_output_path=transferability_dataset_output_path,
             )
         except Exception as e:
             print(f"Error processing dataset in function {func.__name__}: {e}")
