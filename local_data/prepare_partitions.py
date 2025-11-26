@@ -19,7 +19,7 @@ from local_data.constants import (
     PATH_DATAFRAME_PRETRAIN,
     PATH_DATAFRAME_TRANSFERABILITY,
     PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
-    PATH_DATAFRAME_TRANSFERABILITY_SEGMENTATION,
+    PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 )
 
 
@@ -28,6 +28,7 @@ def adequate_01_eyepacs(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     # Note: if you are missing some labels for the test dataframe, you may want to check this link:
     # https://www.kaggle.com/competitions/diabetic-retinopathy-detection/discussion/16149
@@ -77,6 +78,7 @@ def adequate_02_messidor(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     labels_dr = {
         0: "no diabetic retinopathy",
@@ -136,6 +138,7 @@ def adequate_03_idrid(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     path_dataset = "03_IDRID"
     data = []
@@ -233,6 +236,7 @@ def adequate_03_idrid_segmentation(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     path_dataset = "03_IDRID"
     data = []
@@ -295,7 +299,8 @@ def adequate_03_idrid_segmentation(
             df_out = pd.DataFrame(data)
             df_out.to_csv(
                 os.path.join(
-                    PATH_DATAFRAME_TRANSFERABILITY_SEGMENTATION,
+                    transferability_dataset_output_path,
+                    segmentation_transferability_subfolder,
                     f"03_IDRID_{annotations_categories[iCategory]}_{partitions_names[iPartition]}.csv",
                 )
             )
@@ -306,6 +311,7 @@ def adequate_04_rfmid(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     template_diseases = {
         "DR": "diabetic retinopathy",
@@ -407,6 +413,7 @@ def adequate_05_1000x39(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     categories_template = {
         "0.0.Normal": "normal",
@@ -502,6 +509,7 @@ def adequate_06_DEN(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     path_dataset = "06_DEN"
     data = []
@@ -544,6 +552,7 @@ def adequate_07_lag(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     path_dataset = "07_LAG"
     categories_paths = ["non_glaucoma", "suspicious_glaucoma"]
@@ -575,6 +584,7 @@ def adequate_08_odir5k(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     path_dataset = "08_ODIR-5K"
     dataframe = pd.read_csv(
@@ -679,6 +689,7 @@ def adequate_09_papila(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     path_dataset = "09_PAPILA"
     subpath_images = "FundusImages"
@@ -737,6 +748,7 @@ def adequate_10_paraguay(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     path_dataset = "10_PARAGUAY"
     data = []
@@ -783,6 +795,7 @@ def adequate_11_stare(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     path_dataset = "11_STARE"
     data = []
@@ -818,6 +831,7 @@ def adequate_12_aria(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     path_dataset = "12_ARIA"
     categories_subpath = ["aria_a_markups", "aria_c_markups", "aria_d_markups"]
@@ -848,6 +862,7 @@ def adequate_13_fives(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     path_dataset = "13_FIVES"
     images_subpath = [
@@ -889,6 +904,7 @@ def adequate_14_agar300(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     path_dataset = "14_AGAR300"
     finding = ["microaneurysms", "diabetic retinopathy"]
@@ -914,6 +930,7 @@ def adequate_15_aptos(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     path_dataset = "15_APTOS"
     labels_dr = {
@@ -948,6 +965,7 @@ def adequate_16_fundoct(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     path_dataset = "16_FUND-OCT"
     data = []
@@ -1009,6 +1027,7 @@ def adequate_17_diaretdb1(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     import xml.etree.ElementTree as ET
 
@@ -1059,6 +1078,7 @@ def adequate_18_drions_db(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     path_dataset = "18_DRIONS-DB"
     images_subpath = "documents"
@@ -1083,6 +1103,7 @@ def adequate_19_drishtigs1(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     path_dataset = "19_Drishti-GS1"
     dataframe = pd.read_excel(
@@ -1118,6 +1139,7 @@ def adequate_20_e_ophta(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     path_dataset = "20_E-ophta"
     labels = {"EX": "exudates", "healthy": "healthy", "MA": "microaneurysms"}
@@ -1157,6 +1179,7 @@ def adequate_21_g1020(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     path_dataset = "21_G1020"
     image_subpath = "Images"
@@ -1181,6 +1204,7 @@ def adequate_22_heimed(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     path_dataset = "22_HEI-MED"
 
@@ -1193,6 +1217,7 @@ def adequate_23_hrf(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     path_dataset = "23_HRF"
     data = []
@@ -1234,6 +1259,7 @@ def adequate_24_origa(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     path_dataset = "24_ORIGA"
     image_subpath = "Images"
@@ -1260,6 +1286,7 @@ def adequate_25_refuge(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     path_dataset = "25_REFUGE"
     data = []
@@ -1295,6 +1322,7 @@ def adequate_26_roc(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     path_dataset = "26_ROC"
 
@@ -1318,6 +1346,7 @@ def adequate_27_brset(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     path_dataset = "27_BRSET"
     image_subpath = "fundus_photos"
@@ -1409,6 +1438,7 @@ def adequate_28_OIA(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     path_dataset = "28_OIA-DDR"
     data = []
@@ -1481,6 +1511,7 @@ def adequate_29_airogs(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     path_dataset = "29_AIROGS"
     image_subpath = "documents"  # We only have labels for train subset
@@ -1511,6 +1542,7 @@ def adequate_30_sustech(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     path_dataset = "30_SUSTech-SYSU"
     image_subpath = "originalImages"  # We only have labels for train subset
@@ -1567,6 +1599,7 @@ def adequate_31_jichi(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     path_dataset = "31_JICHI"
     image_subpath = "documents"  # We only have labels for train subset
@@ -1622,6 +1655,7 @@ def adequate_32_chaksu(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     path_dataset = "32_CHAKSU"
     subpaths = ["Train", "Test"]
@@ -1676,6 +1710,7 @@ def adequate_33_dr(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     path_dataset = "33_DR1-2"
     subpaths = [
@@ -1716,6 +1751,7 @@ def adequate_34_cataract(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     path_dataset = "34_Cataract"
     subpaths = ["1_normal", "2_cataract", "2_glaucoma", "3_retina_disease"]
@@ -1745,6 +1781,7 @@ def adequate_35_scardat(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     path_dataset = "35_ScarDat"
     subpaths = ["train", "val", "test"]
@@ -1778,6 +1815,7 @@ def adequate_36_acrima(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     path_dataset = "36_ACRIMA"
     subpaths = ["G", "noG"]
@@ -1809,6 +1847,7 @@ def adequate_37_DeepDRiD(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     path_dataset = "37_DeepDRiD"
     subpath = "regular_fundus_images"
@@ -1910,6 +1949,7 @@ def adequate_CGI_HRDC(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     # TASK 1
     path_dataset = "102_CGI-HRDC"
@@ -1944,7 +1984,11 @@ def adequate_CGI_HRDC(
 
     df_out = pd.DataFrame(data)
     df_out.to_csv(
-        os.path.join(PATH_DATAFRAME_TRANSFERABILITY_SEGMENTATION, "CGI_HRDC_Task1.csv")
+        os.path.join(
+            transferability_dataset_output_path,
+            segmentation_transferability_subfolder,
+            "CGI_HRDC_Task1.csv",
+        )
     )
 
     # TASK 2
@@ -1981,7 +2025,11 @@ def adequate_CGI_HRDC(
 
     df_out = pd.DataFrame(data)
     df_out.to_csv(
-        os.path.join(PATH_DATAFRAME_TRANSFERABILITY_SEGMENTATION, "CGI_HRDC_Task2.csv")
+        os.path.join(
+            transferability_dataset_output_path,
+            segmentation_transferability_subfolder,
+            "CGI_HRDC_Task2.csv",
+        )
     )
 
 
@@ -1990,6 +2038,7 @@ def prepare_datasets(
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
     classification_transferability_subfolder: str = PATH_TRANSFERABILITY_CLASSIFICATION_SUBFOLDER,
+    segmentation_transferability_subfolder: str = PATH_TRANSFERABILITY_SEGMENTATION_SUBFOLDER,
 ):
     """Call the functions to prepare the pretraining datasets."""
     if not os.path.exists(pretrain_dataset_output_path):
@@ -2008,8 +2057,17 @@ def prepare_datasets(
                 classification_transferability_subfolder,
             )
         )
-    if not os.path.exists(PATH_DATAFRAME_TRANSFERABILITY_SEGMENTATION):
-        os.mkdir(PATH_DATAFRAME_TRANSFERABILITY_SEGMENTATION)
+    if not os.path.exists(
+        os.path.join(
+            transferability_dataset_output_path, segmentation_transferability_subfolder
+        )
+    ):
+        os.mkdir(
+            os.path.join(
+                transferability_dataset_output_path,
+                segmentation_transferability_subfolder,
+            )
+        )
 
     # Call functions to prepare each dataset
 
@@ -2060,6 +2118,8 @@ def prepare_datasets(
                 datasets_base_path=datasets_base_path,
                 pretrain_dataset_output_path=pretrain_dataset_output_path,
                 transferability_dataset_output_path=transferability_dataset_output_path,
+                classification_transferability_subfolder=classification_transferability_subfolder,
+                segmentation_transferability_subfolder=segmentation_transferability_subfolder,
             )
         except Exception as e:
             print(f"Error processing dataset in function {func.__name__}: {e}")
