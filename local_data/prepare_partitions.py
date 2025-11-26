@@ -15,7 +15,7 @@ import glob
 import pandas as pd
 import numpy as np
 
-from local_data.constants import *
+from local_data.constants import PATH_DATASETS, PATH_DATAFRAME_PRETRAIN, PATH_DATAFRAME_TRANSFERABILITY, PATH_DATAFRAME_TRANSFERABILITY_CLASSIFICATION, PATH_DATAFRAME_TRANSFERABILITY_SEGMENTATION
 
 if not os.path.exists(PATH_DATAFRAME_PRETRAIN):
     os.mkdir(PATH_DATAFRAME_PRETRAIN)
