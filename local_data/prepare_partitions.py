@@ -2207,7 +2207,7 @@ def adequate_CGI_HRDC(dataset_preparation_config: DatasetPreparationConfig):
     )
 
 
-def prepare_datasets(
+def prepare_pretraining_datasets(
     datasets_base_path: str = PATH_DATASETS,
     pretrain_dataset_output_path: str = PATH_DATAFRAME_PRETRAIN,
     transferability_dataset_output_path: str = PATH_DATAFRAME_TRANSFERABILITY,
@@ -2247,9 +2247,9 @@ def prepare_datasets(
 
     dataset_functions = [
         adequate_01_eyepacs,
-        adequate_02_messidor,
+        # adequate_02_messidor,
         adequate_03_idrid,
-        adequate_03_idrid_segmentation,
+        # adequate_03_idrid_segmentation,
         adequate_04_rfmid,
         adequate_05_1000x39,
         adequate_06_DEN,
@@ -2259,7 +2259,7 @@ def prepare_datasets(
         adequate_10_paraguay,
         adequate_11_stare,
         adequate_12_aria,
-        adequate_13_fives,
+        # adequate_13_fives,
         adequate_14_agar300,
         adequate_15_aptos,
         adequate_16_fundoct,
@@ -2268,9 +2268,10 @@ def prepare_datasets(
         adequate_19_drishtigs1,
         adequate_20_e_ophta,
         adequate_21_g1020,
+        # adequate_22_heimed,
         adequate_23_hrf,
         adequate_24_origa,
-        adequate_25_refuge,
+        # adequate_25_refuge,
         adequate_26_roc,
         adequate_27_brset,
         adequate_28_OIA,
@@ -2281,9 +2282,9 @@ def prepare_datasets(
         adequate_33_dr,
         adequate_34_cataract,
         adequate_35_scardat,
-        adequate_36_acrima,
-        adequate_37_DeepDRiD,
-        adequate_CGI_HRDC,
+        # adequate_36_acrima,
+        # adequate_37_DeepDRiD,
+        # adequate_CGI_HRDC,
     ]
 
     dataset_preparation_config = DatasetPreparationConfig(
@@ -2295,9 +2296,14 @@ def prepare_datasets(
     )
 
     for func in dataset_functions:
+        function_name = func.__name__
+        function_base_name = function_name.replace("adequate_", "")
+        number_string = function_base_name.split("_", maxsplit=1)[0]
+        if number_string.isnumeric():
+            function_base_name = function_base_name.removeprefix(f"{number_string}_")
         try:
             func(
                 dataset_preparation_config,
             )
         except Exception as e:
-            print(f"Error processing dataset in function {func.__name__}: {e}")
+            print(f"Error processing dataset '{function_base_name}': {e}")
