@@ -22,15 +22,6 @@ from local_data.constants import (
     PATH_DATAFRAME_TRANSFERABILITY_SEGMENTATION,
 )
 
-if not os.path.exists(PATH_DATAFRAME_PRETRAIN):
-    os.mkdir(PATH_DATAFRAME_PRETRAIN)
-if not os.path.exists(PATH_DATAFRAME_TRANSFERABILITY):
-    os.mkdir(PATH_DATAFRAME_TRANSFERABILITY)
-if not os.path.exists(PATH_DATAFRAME_TRANSFERABILITY_CLASSIFICATION):
-    os.mkdir(PATH_DATAFRAME_TRANSFERABILITY_CLASSIFICATION)
-if not os.path.exists(PATH_DATAFRAME_TRANSFERABILITY_SEGMENTATION):
-    os.mkdir(PATH_DATAFRAME_TRANSFERABILITY_SEGMENTATION)
-
 
 def adequate_01_eyepacs():
     # Note: if you are missing some labels for the test dataframe, you may want to check this link:
@@ -1683,3 +1674,63 @@ def adequate_CGI_HRDC():
 
     df_out = pd.DataFrame(data)
     df_out.to_csv(PATH_DATAFRAME_TRANSFERABILITY_SEGMENTATION + "CGI_HRDC_Task2.csv")
+
+
+def prepare_datasets():
+    """Call the functions to prepare the pretraining datasets."""
+    if not os.path.exists(PATH_DATAFRAME_PRETRAIN):
+        os.mkdir(PATH_DATAFRAME_PRETRAIN)
+    if not os.path.exists(PATH_DATAFRAME_TRANSFERABILITY):
+        os.mkdir(PATH_DATAFRAME_TRANSFERABILITY)
+    if not os.path.exists(PATH_DATAFRAME_TRANSFERABILITY_CLASSIFICATION):
+        os.mkdir(PATH_DATAFRAME_TRANSFERABILITY_CLASSIFICATION)
+    if not os.path.exists(PATH_DATAFRAME_TRANSFERABILITY_SEGMENTATION):
+        os.mkdir(PATH_DATAFRAME_TRANSFERABILITY_SEGMENTATION)
+
+    # Call functions to prepare each dataset
+
+    dataset_functions = [
+        adequate_01_eyepacs,
+        adequate_02_messidor,
+        adequate_03_idrid_segmentation,
+        adequate_04_rfmid,
+        adequate_05_1000x39,
+        adequate_06_DEN,
+        adequate_07_lag,
+        adequate_08_odir5k,
+        adequate_09_papila,
+        adequate_10_paraguay,
+        adequate_11_stare,
+        adequate_12_aria,
+        adequate_13_fives,
+        adequate_14_agar300,
+        adequate_15_aptos,
+        adequate_16_fundoct,
+        adequate_17_diaretdb1,
+        adequate_18_drions_db,
+        adequate_19_drishtigs1,
+        adequate_20_e_ophta,
+        adequate_21_g1020,
+        adequate_23_hrf,
+        adequate_24_origa,
+        adequate_25_refuge,
+        adequate_26_roc,
+        adequate_27_brset,
+        adequate_28_OIA,
+        adequate_29_airogs,
+        adequate_30_sustech,
+        adequate_31_jichi,
+        adequate_32_chaksu,
+        adequate_33_dr,
+        adequate_34_cataract,
+        adequate_35_scardat,
+        adequate_36_acrima,
+        adequate_37_DeepDRiD,
+        adequate_CGI_HRDC,
+    ]
+
+    for func in dataset_functions:
+        try:
+            func()
+        except Exception as e:
+            print(f"Error processing dataset in function {func.__name__}: {e}")
