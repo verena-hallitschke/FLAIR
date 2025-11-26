@@ -41,7 +41,7 @@ def adequate_01_eyepacs():
     for iPartition in partitions:
         print(iPartition)
         dataframe = pd.read_csv(
-            os.path.join(PATH_DATASETS, path_dataset, iPartition + ".csv")
+            os.path.join(PATH_DATASETS, path_dataset, f"{iPartition}.csv")
         )
 
         for iFile in range(dataframe.shape[0]):
@@ -155,7 +155,7 @@ def adequate_03_idrid():
                 subpath,
                 subpath_gt,
                 annotations_paths[i],
-                iFile.replace(".jpg", "_" + annotations_abbreviations[i] + ".tif"),
+                iFile.replace(".jpg", f"_{annotations_abbreviations[i]}.tif"),
             )
             if os.path.isfile(annotation_path):
                 categories.append(annotations_categories[i])
@@ -192,7 +192,7 @@ def adequate_03_idrid():
             path_dataset,
             subpath,
             subpath_images,
-            dataframe["Image name"][iFile] + ".jpg",
+            f"{dataframe['Image name'][iFile]}.jpg",
         )
         categories = []
         atributes = []
@@ -255,7 +255,7 @@ def adequate_03_idrid_segmentation():
                     subpath_images,
                     partitions[iPartition],
                     iFile.replace(".tif", ".jpg").replace(
-                        "_" + annotations_abbreviations[iCategory], ""
+                        f"_{annotations_abbreviations[iCategory]}", ""
                     ),
                 )
                 mask_path = os.path.join(
@@ -272,11 +272,7 @@ def adequate_03_idrid_segmentation():
             df_out.to_csv(
                 os.path.join(
                     PATH_DATAFRAME_TRANSFERABILITY_SEGMENTATION,
-                    "03_IDRID_"
-                    + annotations_categories[iCategory]
-                    + "_"
-                    + partitions_names[iPartition]
-                    + ".csv",
+                    f"03_IDRID_{annotations_categories[iCategory]}_{partitions_names[iPartition]}.csv",
                 )
             )
 
@@ -337,11 +333,11 @@ def adequate_04_rfmid():
     for iPartition in range(len(partitions)):
         subpath_images = os.path.join(
             "1. Original Images",
-            letters[iPartition] + ". " + partitions[iPartition] + " Set",
+            f"{letters[iPartition]}. {partitions[iPartition]} Set",
         )
         subpath_dataframe = os.path.join(
             "2. Groundtruths",
-            letters[iPartition] + ". RFMiD_" + partitions[iPartition] + "_Labels.csv",
+            f"{letters[iPartition]}. RFMiD_{partitions[iPartition]}_Labels.csv",
         )
 
         dataframe = pd.read_csv(
@@ -349,7 +345,7 @@ def adequate_04_rfmid():
         )
         for iFile in range(dataframe.shape[0]):
             image_path = os.path.join(
-                path_dataset, subpath_images, str(dataframe["ID"][iFile]) + ".png"
+                path_dataset, subpath_images, f"{dataframe['ID'][iFile]}.png"
             )
             categories, atributes = [], []
 
@@ -559,10 +555,10 @@ def adequate_08_odir5k():
             image_path = os.path.join(
                 path_dataset,
                 "preprocessed_images",
-                str(id) + "_" + (iEye).lower() + ".jpg",
+                f"{id}_{iEye.lower()}.jpg",
             )
             categories = []
-            description = dataframe_train[(iEye + "-Diagnostic Keywords")].values[iFile]
+            description = dataframe_train[f"{iEye}-Diagnostic Keywords"].values[iFile]
             if "myop" not in description and "cataract" not in description:
                 categories.extend(description.split("，"))
                 if os.path.isfile(os.path.join(PATH_DATASETS, image_path)):
@@ -583,9 +579,9 @@ def adequate_08_odir5k():
             image_path = os.path.join(
                 path_dataset,
                 "preprocessed_images",
-                str(id) + "_" + (iEye).lower() + ".jpg",
+                f"{id}_{iEye.lower()}.jpg",
             )
-            description = dataframe_test[(iEye + "-Diagnostic Keywords")].values[iFile]
+            description = dataframe_test[f"{iEye}-Diagnostic Keywords"].values[iFile]
             if "myop" in description and counter_m <= 200:
                 if os.path.isfile(os.path.join(PATH_DATASETS, image_path)):
                     data.append(
@@ -640,7 +636,7 @@ def adequate_09_papila():
     for iFile in range(dataframes[0].shape[0] - 2):
         id = dataframes[0]["Unnamed: 0"][iFile + 2][1:]
 
-        image_path = os.path.join(path_dataset, subpath_images, "RET" + id + "OD.jpg")
+        image_path = os.path.join(path_dataset, subpath_images, f"RET{id}OD.jpg")
         if os.path.isfile(os.path.join(PATH_DATASETS, image_path)):
             data.append(
                 {
@@ -652,7 +648,7 @@ def adequate_09_papila():
                 }
             )
 
-        image_path = os.path.join(path_dataset, subpath_images, "RET" + id + "OS.jpg")
+        image_path = os.path.join(path_dataset, subpath_images, f"RET{id}OS.jpg")
         if os.path.isfile(os.path.join(PATH_DATASETS, image_path)):
             data.append(
                 {
@@ -716,7 +712,7 @@ def adequate_11_stare():
         categories, atributes = [], []
         columns = line.strip().split("\t")
 
-        image_path = os.path.join(path_dataset, "documents", columns[0] + ".ppm")
+        image_path = os.path.join(path_dataset, "documents", f"{columns[0]}.ppm")
         description = (
             columns[-1].split("\n")[0].lower().split("        ")[-1].replace('"', "")
         )
@@ -829,7 +825,7 @@ def adequate_15_aptos():
     data = []
     for iFile in range(dataframe.shape[0]):
         image_path = os.path.join(
-            path_dataset, images_subpath, dataframe["id_code"][iFile] + ".png"
+            path_dataset, images_subpath, f"{dataframe['id_code'][iFile]}.png"
         )
         categories, atributes = [], []
 
@@ -974,7 +970,7 @@ def adequate_19_drishtigs1():
         for iFile in range(dataframe.shape[0]):
             id = dataframe["Drishti-GS File"].values[iFile][:-1]
             finding = dataframe["Total"].values[iFile].lower()
-            image_path = os.path.join(path_dataset, iPartition, id + ".png")
+            image_path = os.path.join(path_dataset, iPartition, f"{id}.png")
 
             if os.path.isfile(os.path.join(PATH_DATASETS, image_path)):
                 data.append(
@@ -1193,19 +1189,19 @@ def adequate_27_brset():
     data = []
     for iFile in range(dataframe.shape[0]):
         categories, atributes = [], []
-        id = dataframe["image_id"].values[iFile] + ".jpg"
+        id = f"{dataframe['image_id'].values[iFile]}.jpg"
 
         # optic_disc
         categories.append(
-            anatomical_dict[dataframe["optic_disc"].values[iFile]] + " optic disc"
+            f"{anatomical_dict[dataframe['optic_disc'].values[iFile]]} optic disc"
         )
         # vessels
         categories.append(
-            anatomical_dict[str(dataframe["vessels"].values[iFile])] + " vessels"
+            f"{anatomical_dict[str(dataframe['vessels'].values[iFile])]} vessels"
         )
         # macula
         categories.append(
-            anatomical_dict[str(dataframe["macula"].values[iFile])] + " macula"
+            f"{anatomical_dict[str(dataframe['macula'].values[iFile])]} macula"
         )
         # DR_ICDR
         categories.append(dr_dict[str(dataframe["DR_ICDR"].values[iFile])])
@@ -1358,7 +1354,7 @@ def adequate_30_sustech():
                         PATH_DATASETS,
                         path_dataset,
                         "exudatesLabels",
-                        iFile.split(".")[0] + ".xml",
+                        f"{iFile.split('.')[0]}.xml",
                     )
                 ):
                     findings.append("exudates")
@@ -1447,7 +1443,7 @@ def adequate_32_chaksu():
                     iSubpath,
                     path_images,
                     iScanner,
-                    iFile.split(".")[0] + formats[iScanner],
+                    f"{iFile.split('.')[0]}{formats[iScanner]}",
                 )
 
                 if os.path.isfile(os.path.join(PATH_DATASETS, image_path)):
@@ -1597,7 +1593,7 @@ def adequate_37_DeepDRiD():
                 path_dataset,
                 subpath,
                 paritions_path[i],
-                paritions_path[i][:-1] + ".csv",
+                f"{paritions_path[i][:-1]}.csv",
             )
         )
         for ii in range(dataframe.shape[0]):
@@ -1642,7 +1638,7 @@ def adequate_37_DeepDRiD():
         iFile = os.path.join(
             "Images",
             dataframe["image_id"][ii].split("_")[0],
-            dataframe["image_id"][ii] + ".jpg",
+            f"{dataframe['image_id'][ii]}.jpg",
         )
         dr = dataframe["DR_Levels"][ii]
 
