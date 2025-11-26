@@ -549,13 +549,13 @@ def adequate_08_odir5k():
     # Train subset
     data = []
     for iFile in range(dataframe_train.shape[0]):
-        id = dataframe_train["ID"].values[iFile]
+        sample_id = dataframe_train["ID"].values[iFile]
 
         for iEye in ["Right", "Left"]:
             image_path = os.path.join(
                 path_dataset,
                 "preprocessed_images",
-                f"{id}_{iEye.lower()}.jpg",
+                f"{sample_id}_{iEye.lower()}.jpg",
             )
             categories = []
             description = dataframe_train[f"{iEye}-Diagnostic Keywords"].values[iFile]
@@ -573,13 +573,13 @@ def adequate_08_odir5k():
     data = []
     counter_n, counter_m, counter_c = 1, 1, 1
     for iFile in range(dataframe_test.shape[0]):
-        id = dataframe_test["ID"].values[iFile]
+        sample_id = dataframe_test["ID"].values[iFile]
 
         for iEye in ["Right", "Left"]:
             image_path = os.path.join(
                 path_dataset,
                 "preprocessed_images",
-                f"{id}_{iEye.lower()}.jpg",
+                f"{sample_id}_{iEye.lower()}.jpg",
             )
             description = dataframe_test[f"{iEye}-Diagnostic Keywords"].values[iFile]
             if "myop" in description and counter_m <= 200:
@@ -634,9 +634,11 @@ def adequate_09_papila():
 
     data = []
     for iFile in range(dataframes[0].shape[0] - 2):
-        id = dataframes[0]["Unnamed: 0"][iFile + 2][1:]
+        patient_id = dataframes[0]["Unnamed: 0"][iFile + 2][1:]
 
-        image_path = os.path.join(path_dataset, subpath_images, f"RET{id}OD.jpg")
+        image_path = os.path.join(
+            path_dataset, subpath_images, f"RET{patient_id}OD.jpg"
+        )
         if os.path.isfile(os.path.join(PATH_DATASETS, image_path)):
             data.append(
                 {
@@ -648,7 +650,9 @@ def adequate_09_papila():
                 }
             )
 
-        image_path = os.path.join(path_dataset, subpath_images, f"RET{id}OS.jpg")
+        image_path = os.path.join(
+            path_dataset, subpath_images, f"RET{patient_id}OS.jpg"
+        )
         if os.path.isfile(os.path.join(PATH_DATASETS, image_path)):
             data.append(
                 {
@@ -968,9 +972,9 @@ def adequate_19_drishtigs1():
     data = []
     for iPartition in subpath_images:
         for iFile in range(dataframe.shape[0]):
-            id = dataframe["Drishti-GS File"].values[iFile][:-1]
+            file_id = dataframe["Drishti-GS File"].values[iFile][:-1]
             finding = dataframe["Total"].values[iFile].lower()
-            image_path = os.path.join(path_dataset, iPartition, f"{id}.png")
+            image_path = os.path.join(path_dataset, iPartition, f"{file_id}.png")
 
             if os.path.isfile(os.path.join(PATH_DATASETS, image_path)):
                 data.append(
@@ -1027,9 +1031,9 @@ def adequate_21_g1020():
 
     data = []
     for iFile in range(dataframe.shape[0]):
-        id = dataframe["imageID"].values[iFile]
+        image_id = dataframe["imageID"].values[iFile]
         finding = labels[dataframe["binaryLabels"].values[iFile]]
-        image_path = os.path.join(path_dataset, image_subpath, id)
+        image_path = os.path.join(path_dataset, image_subpath, image_id)
 
         if os.path.isfile(os.path.join(PATH_DATASETS, image_path)):
             data.append({"image": image_path, "atributes": [], "categories": [finding]})
@@ -1089,9 +1093,9 @@ def adequate_24_origa():
 
     data = []
     for iFile in range(dataframe.shape[0]):
-        id = dataframe["Filename"].values[iFile]
+        filename = dataframe["Filename"].values[iFile]
         finding = labels[dataframe["Glaucoma"].values[iFile]]
-        image_path = os.path.join(path_dataset, image_subpath, id)
+        image_path = os.path.join(path_dataset, image_subpath, filename)
 
         if os.path.isfile(os.path.join(PATH_DATASETS, image_path)):
             data.append({"image": image_path, "atributes": [], "categories": [finding]})
@@ -1189,7 +1193,7 @@ def adequate_27_brset():
     data = []
     for iFile in range(dataframe.shape[0]):
         categories, atributes = [], []
-        id = f"{dataframe['image_id'].values[iFile]}.jpg"
+        image_filename = f"{dataframe['image_id'].values[iFile]}.jpg"
 
         # optic_disc
         categories.append(
@@ -1218,7 +1222,7 @@ def adequate_27_brset():
             if dataframe[findings[i]].values[iFile] == 1:
                 categories.append(find_names[i])
 
-        image_path = os.path.join(path_dataset, image_subpath, id)
+        image_path = os.path.join(path_dataset, image_subpath, image_filename)
         if os.path.isfile(os.path.join(PATH_DATASETS, image_path)):
             data.append(
                 {"image": image_path, "atributes": [], "categories": categories}
@@ -1308,9 +1312,9 @@ def adequate_29_airogs():
     data = []
     for iFile in files[2:]:
         print(iFile)
-        id = dataframe["challenge_id"] == iFile.split(".")[0]
+        row_mask = dataframe["challenge_id"] == iFile.split(".")[0]
 
-        finding = labels[dataframe[id]["class"].values[0]]
+        finding = labels[dataframe[row_mask]["class"].values[0]]
         image_path = os.path.join(path_dataset, image_subpath, iFile)
 
         if os.path.isfile(os.path.join(PATH_DATASETS, image_path)):
@@ -1339,11 +1343,13 @@ def adequate_30_sustech():
     data = []
     for iFile in files:
         print(iFile)
-        id = dataframe["Fundus_images"] == iFile
+        row_mask = dataframe["Fundus_images"] == iFile
 
-        if np.argwhere(id.values).__len__() > 0:
+        if np.argwhere(row_mask.values).__len__() > 0:
             finding = labels_dr[
-                dataframe[id]["DR_grade_American_Academy_of_Ophthalmology"].values[0]
+                dataframe[row_mask][
+                    "DR_grade_American_Academy_of_Ophthalmology"
+                ].values[0]
             ]
             image_path = os.path.join(path_dataset, image_subpath, iFile)
 
@@ -1400,10 +1406,12 @@ def adequate_31_jichi():
     data = []
     for iFile in files:
         print(iFile)
-        id = dataframe["Image"] == iFile
+        row_mask = dataframe["Image"] == iFile
 
-        if np.argwhere(id.values).__len__() > 0:
-            finding = labels_dr[dataframe[id]["Davis_grading_of_one_figure"].values[0]]
+        if np.argwhere(row_mask.values).__len__() > 0:
+            finding = labels_dr[
+                dataframe[row_mask]["Davis_grading_of_one_figure"].values[0]
+            ]
             image_path = os.path.join(path_dataset, image_subpath, iFile)
 
             if os.path.isfile(os.path.join(PATH_DATASETS, image_path)):
