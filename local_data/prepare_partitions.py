@@ -34,25 +34,27 @@ def adequate_01_eyepacs():
         3: "severe diabetic retinopathy",
         4: "proliferative diabetic retinopathy",
     }
-    path_dataset = "01_EYEPACS/"
+    path_dataset = "01_EYEPACS"
 
     partitions = ["train", "test", "val"]
     data = []
     for iPartition in partitions:
         print(iPartition)
-        dataframe = pd.read_csv(PATH_DATASETS + path_dataset + iPartition + ".csv")
+        dataframe = pd.read_csv(
+            os.path.join(PATH_DATASETS, path_dataset, iPartition + ".csv")
+        )
 
         for iFile in range(dataframe.shape[0]):
             print(iFile, end="\r")
-            image_path = (
-                path_dataset
-                + "documents/"
-                + dataframe["image_id"][iFile].split("/")[-1].replace(".jpg", ".jpeg")
+            image_path = os.path.join(
+                path_dataset,
+                "documents",
+                dataframe["image_id"][iFile].split("/")[-1].replace(".jpg", ".jpeg"),
             )
             categories, atributes = [], []
 
             categories.append(labels_dr[dataframe["dr"][iFile]])
-            if os.path.isfile(PATH_DATASETS + image_path):
+            if os.path.isfile(os.path.join(PATH_DATASETS, image_path)):
                 data.append(
                     {
                         "image": image_path,
@@ -62,7 +64,7 @@ def adequate_01_eyepacs():
                 )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_PRETRAIN + "01_EYEPACS.csv")
+    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "01_EYEPACS.csv"))
 
 
 def adequate_02_messidor():
@@ -76,18 +78,20 @@ def adequate_02_messidor():
     labels_dme = {0: "no diabetic macular edema", 1: "diabetic macular edema"}
     labels_gradable = {0: "noisy", 1: "clean"}
 
-    path_dataset = "02_MESSIDOR/"
+    path_dataset = "02_MESSIDOR"
 
     # The link to MESSIDOR2 labels is at:
     # https://www.kaggle.com/datasets/google-brain/messidor2-dr-grades?select=messidor_data.csv
-    dataframe = pd.read_csv(PATH_DATASETS + path_dataset + "messidor_data.csv")
+    dataframe = pd.read_csv(
+        os.path.join(PATH_DATASETS, path_dataset, "messidor_data.csv")
+    )
 
     data = []
     for iFile in range(dataframe.shape[0]):
-        image_path = (
-            path_dataset
-            + "documents/"
-            + dataframe["image_id"][iFile].replace(".jpg", ".JPG")
+        image_path = os.path.join(
+            path_dataset,
+            "documents",
+            dataframe["image_id"][iFile].replace(".jpg", ".JPG"),
         )
         categories, atributes = [], []
 
@@ -97,7 +101,7 @@ def adequate_02_messidor():
             categories.append(labels_dr[dataframe["adjudicated_dr_grade"][iFile]])
             categories.append(labels_dme[dataframe["adjudicated_dme"][iFile]])
 
-        if os.path.isfile(PATH_DATASETS + image_path):
+        if os.path.isfile(os.path.join(PATH_DATASETS, image_path)):
             if len(categories) > 0:
                 data.append(
                     {
@@ -108,17 +112,19 @@ def adequate_02_messidor():
                 )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_TRANSFERABILITY_CLASSIFICATION + "02_MESSIDOR.csv")
+    df_out.to_csv(
+        os.path.join(PATH_DATAFRAME_TRANSFERABILITY_CLASSIFICATION, "02_MESSIDOR.csv")
+    )
 
 
 def adequate_03_idrid():
-    path_dataset = "03_IDRID/"
+    path_dataset = "03_IDRID"
     data = []
 
     # A.Segmentation
-    subpath = "A.%20Segmentation/A. Segmentation/"
-    subpath_images = "1. Original Images/a. Training Set/"
-    subpath_gt = "2. All Segmentation Groundtruths/a. Training Set/"
+    subpath = os.path.join("A.%20Segmentation", "A. Segmentation")
+    subpath_images = os.path.join("1. Original Images", "a. Training Set")
+    subpath_gt = os.path.join("2. All Segmentation Groundtruths", "a. Training Set")
     annotations_paths = [
         "1. Microaneurysms",
         "2. Haemorrhages",
@@ -134,23 +140,22 @@ def adequate_03_idrid():
     ]
 
     files_segmentation = os.listdir(
-        PATH_DATASETS + path_dataset + subpath + subpath_images
+        os.path.join(PATH_DATASETS, path_dataset, subpath, subpath_images)
     )
 
     for iFile in files_segmentation:
-        image_path = path_dataset + subpath + subpath_images + iFile
+        image_path = os.path.join(path_dataset, subpath, subpath_images, iFile)
 
         categories = []
         atributes = []
         for i in range(len(annotations_categories)):
-            annotation_path = (
-                PATH_DATASETS
-                + path_dataset
-                + subpath
-                + subpath_gt
-                + annotations_paths[i]
-                + "/"
-                + iFile.replace(".jpg", "_" + annotations_abbreviations[i] + ".tif")
+            annotation_path = os.path.join(
+                PATH_DATASETS,
+                path_dataset,
+                subpath,
+                subpath_gt,
+                annotations_paths[i],
+                iFile.replace(".jpg", "_" + annotations_abbreviations[i] + ".tif"),
             )
             if os.path.isfile(annotation_path):
                 categories.append(annotations_categories[i])
@@ -173,18 +178,21 @@ def adequate_03_idrid():
         2: "diabetic macular edema",
     }
 
-    subpath = "B.%20Disease%20Grading/B. Disease Grading/"
-    subpath_images = "1. Original Images/a. Training Set/"
-    dataframe = "2. Groundtruths/a. IDRiD_Disease Grading_Training Labels.csv"
+    subpath = os.path.join("B.%20Disease%20Grading", "B. Disease Grading")
+    subpath_images = os.path.join("1. Original Images", "a. Training Set")
+    dataframe = os.path.join(
+        "2. Groundtruths", "a. IDRiD_Disease Grading_Training Labels.csv"
+    )
 
-    dataframe = pd.read_csv(PATH_DATASETS + path_dataset + subpath + dataframe)
+    dataframe = pd.read_csv(
+        os.path.join(PATH_DATASETS, path_dataset, subpath, dataframe)
+    )
     for iFile in range(dataframe.shape[0]):
-        image_path = (
-            path_dataset
-            + subpath
-            + subpath_images
-            + dataframe["Image name"][iFile]
-            + ".jpg"
+        image_path = os.path.join(
+            path_dataset,
+            subpath,
+            subpath_images,
+            dataframe["Image name"][iFile] + ".jpg",
         )
         categories = []
         atributes = []
@@ -192,31 +200,31 @@ def adequate_03_idrid():
         categories.append(labels_dr[dataframe["Retinopathy grade"][iFile]])
         categories.append(labels_dme[dataframe["Risk of macular edema "][iFile]])
 
-        if os.path.isfile(PATH_DATASETS + image_path):
+        if os.path.isfile(os.path.join(PATH_DATASETS, image_path)):
             data.append(
                 {"image": image_path, "atributes": atributes, "categories": categories}
             )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_PRETRAIN + "03_IDRID.csv")
+    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "03_IDRID.csv"))
 
 
 def adequate_03_idrid_segmentation():
-    path_dataset = "03_IDRID/"
+    path_dataset = "03_IDRID"
     data = []
 
     # A.Segmentation
-    subpath = "A.%20Segmentation/A. Segmentation/"
-    subpath_images = "1. Original Images/"
-    subpath_masks = "2. All Segmentation Groundtruths/"
-    partitions = ["a. Training Set/", "b. Testing Set/"]
+    subpath = os.path.join("A.%20Segmentation", "A. Segmentation")
+    subpath_images = "1. Original Images"
+    subpath_masks = "2. All Segmentation Groundtruths"
+    partitions = ["a. Training Set", "b. Testing Set"]
     partitions_names = ["train", "test"]
 
     categories_paths = [
-        "1. Microaneurysms/",
-        "2. Haemorrhages/",
-        "3. Hard Exudates/",
-        "4. Soft Exudates/",
+        "1. Microaneurysms",
+        "2. Haemorrhages",
+        "3. Hard Exudates",
+        "4. Soft Exudates",
     ]
     annotations_abbreviations = ["MA", "HE", "EX", "SE"]
     annotations_categories = [
@@ -230,42 +238,46 @@ def adequate_03_idrid_segmentation():
         for iCategory in range(len(categories_paths)):
             data = []
             files = os.listdir(
-                PATH_DATASETS
-                + path_dataset
-                + subpath
-                + subpath_masks
-                + partitions[iPartition]
-                + categories_paths[iCategory]
+                os.path.join(
+                    PATH_DATASETS,
+                    path_dataset,
+                    subpath,
+                    subpath_masks,
+                    partitions[iPartition],
+                    categories_paths[iCategory],
+                )
             )
 
             for iFile in files:
-                image_path = (
-                    path_dataset
-                    + subpath
-                    + subpath_images
-                    + partitions[iPartition]
-                    + iFile.replace(".tif", ".jpg").replace(
+                image_path = os.path.join(
+                    path_dataset,
+                    subpath,
+                    subpath_images,
+                    partitions[iPartition],
+                    iFile.replace(".tif", ".jpg").replace(
                         "_" + annotations_abbreviations[iCategory], ""
-                    )
+                    ),
                 )
-                mask_path = (
-                    path_dataset
-                    + subpath
-                    + subpath_masks
-                    + partitions[iPartition]
-                    + categories_paths[iCategory]
-                    + iFile
+                mask_path = os.path.join(
+                    path_dataset,
+                    subpath,
+                    subpath_masks,
+                    partitions[iPartition],
+                    categories_paths[iCategory],
+                    iFile,
                 )
                 data.append({"image": image_path, "mask": mask_path})
 
             df_out = pd.DataFrame(data)
             df_out.to_csv(
-                PATH_DATAFRAME_TRANSFERABILITY_SEGMENTATION
-                + "03_IDRID_"
-                + annotations_categories[iCategory]
-                + "_"
-                + partitions_names[iPartition]
-                + ".csv"
+                os.path.join(
+                    PATH_DATAFRAME_TRANSFERABILITY_SEGMENTATION,
+                    "03_IDRID_"
+                    + annotations_categories[iCategory]
+                    + "_"
+                    + partitions_names[iPartition]
+                    + ".csv",
+                )
             )
 
 
@@ -318,30 +330,26 @@ def adequate_04_rfmid():
         "CL": "collaterals",
     }
 
-    path_dataset = "04_RFMid/"
+    path_dataset = "04_RFMid"
     partitions = ["Training", "Validation", "Testing"]
     letters = ["a", "b", "c"]
     data = []
     for iPartition in range(len(partitions)):
-        subpath_images = (
-            "1. Original Images/"
-            + letters[iPartition]
-            + ". "
-            + partitions[iPartition]
-            + " Set/"
+        subpath_images = os.path.join(
+            "1. Original Images",
+            letters[iPartition] + ". " + partitions[iPartition] + " Set",
         )
-        subpath_dataframe = (
-            "2. Groundtruths/"
-            + letters[iPartition]
-            + ". RFMiD_"
-            + partitions[iPartition]
-            + "_Labels.csv"
+        subpath_dataframe = os.path.join(
+            "2. Groundtruths",
+            letters[iPartition] + ". RFMiD_" + partitions[iPartition] + "_Labels.csv",
         )
 
-        dataframe = pd.read_csv(PATH_DATASETS + path_dataset + subpath_dataframe)
+        dataframe = pd.read_csv(
+            os.path.join(PATH_DATASETS, path_dataset, subpath_dataframe)
+        )
         for iFile in range(dataframe.shape[0]):
-            image_path = (
-                path_dataset + subpath_images + str(dataframe["ID"][iFile]) + ".png"
+            image_path = os.path.join(
+                path_dataset, subpath_images, str(dataframe["ID"][iFile]) + ".png"
             )
             categories, atributes = [], []
 
@@ -356,7 +364,7 @@ def adequate_04_rfmid():
                 categories.append("no disease")
                 categories.append("healthy")
 
-            if os.path.isfile(PATH_DATASETS + image_path):
+            if os.path.isfile(os.path.join(PATH_DATASETS, image_path)):
                 data.append(
                     {
                         "image": image_path,
@@ -366,7 +374,7 @@ def adequate_04_rfmid():
                 )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_PRETRAIN + "04_RFMid.csv")
+    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "04_RFMid.csv"))
 
 
 def adequate_05_1000x39():
@@ -414,47 +422,49 @@ def adequate_05_1000x39():
 
     categories_test = ["0.0.Normal", "15.0.Retinitis pigmentosa", "8.MH"]
 
-    path_dataset = "05_1000x39/"
+    path_dataset = "05_1000x39"
     data = []
 
-    categories = os.listdir(PATH_DATASETS + path_dataset)
+    categories = os.listdir(os.path.join(PATH_DATASETS, path_dataset))
     [categories.remove(iCategory) for iCategory in categories_test]
 
     for iCategory in categories:
-        images = os.listdir(PATH_DATASETS + path_dataset + iCategory + "/")
+        images = os.listdir(os.path.join(PATH_DATASETS, path_dataset, iCategory))
 
         for iImage in images:
             data.append(
                 {
-                    "image": path_dataset + iCategory + "/" + iImage,
+                    "image": os.path.join(path_dataset, iCategory, iImage),
                     "atributes": [],
                     "categories": [categories_template[iCategory]],
                 }
             )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_PRETRAIN + "05_1000x39.csv")
+    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "05_1000x39.csv"))
 
     data = []
     for iCategory in categories_test:
-        images = os.listdir(PATH_DATASETS + path_dataset + iCategory + "/")
+        images = os.listdir(os.path.join(PATH_DATASETS, path_dataset, iCategory))
         images = images[0:20]
 
         for iImage in images:
             data.append(
                 {
-                    "image": path_dataset + iCategory + "/" + iImage,
+                    "image": os.path.join(path_dataset, iCategory, iImage),
                     "atributes": [],
                     "categories": [categories_template[iCategory]],
                 }
             )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_TRANSFERABILITY_CLASSIFICATION + "05_20x4.csv")
+    df_out.to_csv(
+        os.path.join(PATH_DATAFRAME_TRANSFERABILITY_CLASSIFICATION, "05_20x4.csv")
+    )
 
 
 def adequate_06_DEN():
-    path_dataset = "06_DEN/"
+    path_dataset = "06_DEN"
     data = []
 
     partitions = [
@@ -463,11 +473,11 @@ def adequate_06_DEN():
         "DeepEyeNet_valid.json",
     ]
     for iPartition in partitions:
-        f = open(PATH_DATASETS + path_dataset + iPartition)
+        f = open(os.path.join(PATH_DATASETS, path_dataset, iPartition))
         meta = json.load(f)
 
         for iSample in meta:
-            image_path = path_dataset + list(iSample.keys())[0]
+            image_path = os.path.join(path_dataset, list(iSample.keys())[0])
             categories, atributes = [], []
 
             info = iSample[list(iSample.keys())[0]]
@@ -477,7 +487,7 @@ def adequate_06_DEN():
             if "" in categories:
                 categories.remove("")
 
-            if os.path.isfile(PATH_DATASETS + image_path):
+            if os.path.isfile(os.path.join(PATH_DATASETS, image_path)):
                 data.append(
                     {
                         "image": image_path,
@@ -487,36 +497,38 @@ def adequate_06_DEN():
                 )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_PRETRAIN + "06_DEN.csv")
+    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "06_DEN.csv"))
 
 
 def adequate_07_lag():
-    path_dataset = "07_LAG/"
+    path_dataset = "07_LAG"
     categories_paths = ["non_glaucoma", "suspicious_glaucoma"]
     categories = ["no glaucoma", "glaucoma"]
 
     data = []
     for i in range(len(categories_paths)):
         images = os.listdir(
-            PATH_DATASETS + path_dataset + categories_paths[i] + "/image/"
+            os.path.join(PATH_DATASETS, path_dataset, categories_paths[i], "image")
         )
 
         for iImage in images:
             data.append(
                 {
-                    "image": path_dataset + categories_paths[i] + "/image/" + iImage,
+                    "image": os.path.join(
+                        path_dataset, categories_paths[i], "image", iImage
+                    ),
                     "atributes": [],
                     "categories": [categories[i]],
                 }
             )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_PRETRAIN + "07_LAG.csv")
+    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "07_LAG.csv"))
 
 
 def adequate_08_odir5k():
-    path_dataset = "08_ODIR-5K/"
-    dataframe = pd.read_csv(PATH_DATASETS + path_dataset + "full_df.csv")
+    path_dataset = "08_ODIR-5K"
+    dataframe = pd.read_csv(os.path.join(PATH_DATASETS, path_dataset, "full_df.csv"))
 
     # Train and Incremental test division
     mask_cat = np.logical_and(
@@ -544,25 +556,22 @@ def adequate_08_odir5k():
         id = dataframe_train["ID"].values[iFile]
 
         for iEye in ["Right", "Left"]:
-            image_path = (
-                path_dataset
-                + "preprocessed_images/"
-                + str(id)
-                + "_"
-                + (iEye).lower()
-                + ".jpg"
+            image_path = os.path.join(
+                path_dataset,
+                "preprocessed_images",
+                str(id) + "_" + (iEye).lower() + ".jpg",
             )
             categories = []
             description = dataframe_train[(iEye + "-Diagnostic Keywords")].values[iFile]
             if "myop" not in description and "cataract" not in description:
                 categories.extend(description.split("，"))
-                if os.path.isfile(PATH_DATASETS + image_path):
+                if os.path.isfile(os.path.join(PATH_DATASETS, image_path)):
                     data.append(
                         {"image": image_path, "atributes": [], "categories": categories}
                     )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_PRETRAIN + "08_ODIR.csv")
+    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "08_ODIR.csv"))
 
     # Test subset
     data = []
@@ -571,17 +580,14 @@ def adequate_08_odir5k():
         id = dataframe_test["ID"].values[iFile]
 
         for iEye in ["Right", "Left"]:
-            image_path = (
-                path_dataset
-                + "preprocessed_images/"
-                + str(id)
-                + "_"
-                + (iEye).lower()
-                + ".jpg"
+            image_path = os.path.join(
+                path_dataset,
+                "preprocessed_images",
+                str(id) + "_" + (iEye).lower() + ".jpg",
             )
             description = dataframe_test[(iEye + "-Diagnostic Keywords")].values[iFile]
             if "myop" in description and counter_m <= 200:
-                if os.path.isfile(PATH_DATASETS + image_path):
+                if os.path.isfile(os.path.join(PATH_DATASETS, image_path)):
                     data.append(
                         {
                             "image": image_path,
@@ -591,7 +597,7 @@ def adequate_08_odir5k():
                     )
                     counter_m += 1
             if "cataract" in description and counter_c <= 200:
-                if os.path.isfile(PATH_DATASETS + image_path):
+                if os.path.isfile(os.path.join(PATH_DATASETS, image_path)):
                     data.append(
                         {
                             "image": image_path,
@@ -601,25 +607,31 @@ def adequate_08_odir5k():
                     )
                     counter_c += 1
             if "normal" in description and counter_n <= 200:
-                if os.path.isfile(PATH_DATASETS + image_path):
+                if os.path.isfile(os.path.join(PATH_DATASETS, image_path)):
                     data.append(
                         {"image": image_path, "atributes": [], "categories": ["normal"]}
                     )
                     counter_n += 1
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_TRANSFERABILITY_CLASSIFICATION + "08_ODIR200x3.csv")
+    df_out.to_csv(
+        os.path.join(PATH_DATAFRAME_TRANSFERABILITY_CLASSIFICATION, "08_ODIR200x3.csv")
+    )
 
 
 def adequate_09_papila():
-    path_dataset = "09_PAPILA/"
-    subpath_images = "FundusImages/"
+    path_dataset = "09_PAPILA"
+    subpath_images = "FundusImages"
     dataframes = [
         pd.read_excel(
-            PATH_DATASETS + path_dataset + "ClinicalData/patient_data_od.xlsx"
+            os.path.join(
+                PATH_DATASETS, path_dataset, "ClinicalData", "patient_data_od.xlsx"
+            )
         ),
         pd.read_excel(
-            PATH_DATASETS + path_dataset + "ClinicalData/patient_data_os.xlsx"
+            os.path.join(
+                PATH_DATASETS, path_dataset, "ClinicalData", "patient_data_os.xlsx"
+            )
         ),
     ]
     labels_glaucoma = {0: "normal", 1: "glaucoma", 2: "glaucoma"}
@@ -628,8 +640,8 @@ def adequate_09_papila():
     for iFile in range(dataframes[0].shape[0] - 2):
         id = dataframes[0]["Unnamed: 0"][iFile + 2][1:]
 
-        image_path = path_dataset + subpath_images + "RET" + id + "OD" + ".jpg"
-        if os.path.isfile(PATH_DATASETS + image_path):
+        image_path = os.path.join(path_dataset, subpath_images, "RET" + id + "OD.jpg")
+        if os.path.isfile(os.path.join(PATH_DATASETS, image_path)):
             data.append(
                 {
                     "image": image_path,
@@ -640,8 +652,8 @@ def adequate_09_papila():
                 }
             )
 
-        image_path = path_dataset + subpath_images + "RET" + id + "OS" + ".jpg"
-        if os.path.isfile(PATH_DATASETS + image_path):
+        image_path = os.path.join(path_dataset, subpath_images, "RET" + id + "OS.jpg")
+        if os.path.isfile(os.path.join(PATH_DATASETS, image_path)):
             data.append(
                 {
                     "image": image_path,
@@ -653,11 +665,11 @@ def adequate_09_papila():
             )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_PRETRAIN + "09_PAPILA.csv")
+    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "09_PAPILA.csv"))
 
 
 def adequate_10_paraguay():
-    path_dataset = "10_PARAGUAY/"
+    path_dataset = "10_PARAGUAY"
     data = []
 
     subpaths = [
@@ -680,31 +692,31 @@ def adequate_10_paraguay():
     ]
 
     for iPath in range(len(subpaths)):
-        images = os.listdir(PATH_DATASETS + path_dataset + subpaths[iPath] + "/")
+        images = os.listdir(os.path.join(PATH_DATASETS, path_dataset, subpaths[iPath]))
 
         for iImage in images:
             data.append(
                 {
-                    "image": path_dataset + subpaths[iPath] + "/" + iImage,
+                    "image": os.path.join(path_dataset, subpaths[iPath], iImage),
                     "atributes": [],
                     "categories": [categories[iPath]],
                 }
             )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_PRETRAIN + "10_PARAGUAY.csv")
+    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "10_PARAGUAY.csv"))
 
 
 def adequate_11_stare():
-    path_dataset = "11_STARE/"
+    path_dataset = "11_STARE"
     data = []
     metadata = "all-mg-codes.txt"
 
-    for line in open(PATH_DATASETS + path_dataset + metadata):
+    for line in open(os.path.join(PATH_DATASETS, path_dataset, metadata)):
         categories, atributes = [], []
         columns = line.strip().split("\t")
 
-        image_path = path_dataset + "documents/" + columns[0] + ".ppm"
+        image_path = os.path.join(path_dataset, "documents", columns[0] + ".ppm")
         description = (
             columns[-1].split("\n")[0].lower().split("        ")[-1].replace('"', "")
         )
@@ -716,41 +728,46 @@ def adequate_11_stare():
             .split(" or ")
         )
 
-        if os.path.isfile(PATH_DATASETS + image_path):
+        if os.path.isfile(os.path.join(PATH_DATASETS, image_path)):
             data.append(
                 {"image": image_path, "atributes": [], "categories": categories}
             )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_PRETRAIN + "11_STARE.csv")
+    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "11_STARE.csv"))
 
 
 def adequate_12_aria():
-    path_dataset = "12_ARIA/"
+    path_dataset = "12_ARIA"
     categories_subpath = ["aria_a_markups", "aria_c_markups", "aria_d_markups"]
     categories = ["age-related macular degeneration", "normal", "diabetic retinopathy"]
     data = []
 
     for i in range(len(categories)):
         for iFile in os.listdir(
-            PATH_DATASETS + path_dataset + categories_subpath[i] + "/"
+            os.path.join(PATH_DATASETS, path_dataset, categories_subpath[i])
         ):
             if iFile != "Thumbs.db":
                 data.append(
                     {
-                        "image": path_dataset + categories_subpath[i] + "/" + iFile,
+                        "image": os.path.join(
+                            path_dataset, categories_subpath[i], iFile
+                        ),
                         "atributes": [],
                         "categories": [categories[i]],
                     }
                 )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_PRETRAIN + "12_ARIA.csv")
+    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "12_ARIA.csv"))
 
 
 def adequate_13_fives():
-    path_dataset = "13_FIVES/"
-    images_subpath = ["train/Original/", "test/Original/"]
+    path_dataset = "13_FIVES"
+    images_subpath = [
+        os.path.join("train", "Original"),
+        os.path.join("test", "Original"),
+    ]
     labels_dme = {
         "A": "age related macular degeneration",
         "D": "diabetic retinopathy",
@@ -759,44 +776,46 @@ def adequate_13_fives():
     }
     data = []
     for iSubpath in images_subpath:
-        files = os.listdir(PATH_DATASETS + path_dataset + iSubpath)
+        files = os.listdir(os.path.join(PATH_DATASETS, path_dataset, iSubpath))
         for iFile in files:
             if iFile != "Thumbs.db":
                 category__code = iFile.split(".")[0].split("_")[-1]
                 data.append(
                     {
-                        "image": path_dataset + iSubpath + iFile,
+                        "image": os.path.join(path_dataset, iSubpath, iFile),
                         "atributes": [],
                         "categories": [labels_dme[category__code]],
                     }
                 )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_TRANSFERABILITY_CLASSIFICATION + "13_FIVES.csv")
+    df_out.to_csv(
+        os.path.join(PATH_DATAFRAME_TRANSFERABILITY_CLASSIFICATION, "13_FIVES.csv")
+    )
 
 
 def adequate_14_agar300():
-    path_dataset = "14_AGAR300/"
+    path_dataset = "14_AGAR300"
     finding = ["microaneurysms", "diabetic retinopathy"]
-    images_subpath = "img/"
+    images_subpath = "img"
 
     data = []
-    files = os.listdir(PATH_DATASETS + path_dataset + images_subpath)
+    files = os.listdir(os.path.join(PATH_DATASETS, path_dataset, images_subpath))
     for iFile in files:
         data.append(
             {
-                "image": path_dataset + images_subpath + iFile,
+                "image": os.path.join(path_dataset, images_subpath, iFile),
                 "atributes": [],
                 "categories": finding,
             }
         )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_PRETRAIN + "14_AGAR300.csv")
+    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "14_AGAR300.csv"))
 
 
 def adequate_15_aptos():
-    path_dataset = "15_APTOS/"
+    path_dataset = "15_APTOS"
     labels_dr = {
         0: "no diabetic retinopathy",
         1: "mild diabetic retinopathy",
@@ -804,28 +823,28 @@ def adequate_15_aptos():
         3: "severe diabetic retinopathy",
         4: "proliferative diabetic retinopathy",
     }
-    dataframe = pd.read_csv(PATH_DATASETS + path_dataset + "train.csv")
-    images_subpath = "train_images/"
+    dataframe = pd.read_csv(os.path.join(PATH_DATASETS, path_dataset, "train.csv"))
+    images_subpath = "train_images"
 
     data = []
     for iFile in range(dataframe.shape[0]):
-        image_path = (
-            path_dataset + images_subpath + dataframe["id_code"][iFile] + ".png"
+        image_path = os.path.join(
+            path_dataset, images_subpath, dataframe["id_code"][iFile] + ".png"
         )
         categories, atributes = [], []
 
         categories.append(labels_dr[dataframe["diagnosis"][iFile]])
-        if os.path.isfile(PATH_DATASETS + image_path):
+        if os.path.isfile(os.path.join(PATH_DATASETS, image_path)):
             data.append(
                 {"image": image_path, "atributes": atributes, "categories": categories}
             )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_PRETRAIN + "15_APTOS.csv")
+    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "15_APTOS.csv"))
 
 
 def adequate_16_fundoct():
-    path_dataset = "16_FUND-OCT/"
+    path_dataset = "16_FUND-OCT"
     data = []
     dict_macula = {
         "acute CSR": "acute central serous retinopathy",
@@ -836,10 +855,12 @@ def adequate_16_fundoct():
         "neovascular_AMD": "neovascular age-related macular degeneration",
     }
     # Glaucoma/NoGlaucoma
-    subpath = "Dataset/OD/"
+    subpath = os.path.join("Dataset", "OD")
 
     data = []
-    files = glob.glob(PATH_DATASETS + path_dataset + subpath + "*/*/*/*Color*")
+    files = glob.glob(
+        os.path.join(PATH_DATASETS, path_dataset, subpath, "*", "*", "*", "*Color*")
+    )
     for iFile in files:
         data.append(
             {
@@ -855,8 +876,10 @@ def adequate_16_fundoct():
         )
 
     # Macula-related
-    subpath = "Dataset/Macula/"
-    files = glob.glob(PATH_DATASETS + path_dataset + subpath + "*/*/*/*Color*")
+    subpath = os.path.join("Dataset", "Macula")
+    files = glob.glob(
+        os.path.join(PATH_DATASETS, path_dataset, subpath, "*", "*", "*", "*Color*")
+    )
     for iFile in files:
         data.append(
             {
@@ -869,24 +892,26 @@ def adequate_16_fundoct():
         )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_PRETRAIN + "16_FUND-OCT.csv")
+    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "16_FUND-OCT.csv"))
 
 
 def adequate_17_diaretdb1():
     import xml.etree.ElementTree as ET
 
-    path_dataset = "17_DiaRetDB1/"
-    subpath_images = "documents/"
-    subpath_annotations = "groundtruth/"
+    path_dataset = "17_DiaRetDB1"
+    subpath_images = "documents"
+    subpath_annotations = "groundtruth"
 
-    files = os.listdir(PATH_DATASETS + path_dataset + subpath_images)
+    files = os.listdir(os.path.join(PATH_DATASETS, path_dataset, subpath_images))
     data = []
     for iFile in files:
         categories = []
         for annotator in ["_01.xml", "_02.xml", "_03.xml", "_04.xml"]:
             annotation_id = iFile.replace(".png", annotator)
             tree = ET.parse(
-                PATH_DATASETS + path_dataset + subpath_annotations + annotation_id
+                os.path.join(
+                    PATH_DATASETS, path_dataset, subpath_annotations, annotation_id
+                )
             )
             root = tree.getroot()
             for item in root.findall("./markinglist/marking/"):
@@ -912,45 +937,46 @@ def adequate_17_diaretdb1():
         )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_PRETRAIN + "17_DiaRetDB1.csv")
+    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "17_DiaRetDB1.csv"))
 
 
 def adequate_18_drions_db():
-    path_dataset = "18_DRIONS-DB/"
-    images_subpath = "documents/"
+    path_dataset = "18_DRIONS-DB"
+    images_subpath = "documents"
 
     data = []
-    files = os.listdir(PATH_DATASETS + path_dataset + images_subpath)
+    files = os.listdir(os.path.join(PATH_DATASETS, path_dataset, images_subpath))
     for iFile in files:
         data.append(
             {
-                "image": path_dataset + images_subpath + iFile,
+                "image": os.path.join(path_dataset, images_subpath, iFile),
                 "atributes": [],
                 "categories": ["no cataract", "a disease"],
             }
         )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_PRETRAIN + "18_DRIONS-DB.csv")
+    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "18_DRIONS-DB.csv"))
 
 
 def adequate_19_drishtigs1():
-    path_dataset = "19_Drishti-GS1/"
+    path_dataset = "19_Drishti-GS1"
     dataframe = pd.read_excel(
-        PATH_DATASETS + path_dataset + "Drishti-GS1_diagnosis.xlsx", skiprows=3
+        os.path.join(PATH_DATASETS, path_dataset, "Drishti-GS1_diagnosis.xlsx"),
+        skiprows=3,
     )[1:]
     subpath_images = [
-        "Drishti-GS1_files/Training/Images/",
-        "Drishti-GS1_files/Test/Images/",
+        os.path.join("Drishti-GS1_files", "Training", "Images"),
+        os.path.join("Drishti-GS1_files", "Test", "Images"),
     ]
     data = []
     for iPartition in subpath_images:
         for iFile in range(dataframe.shape[0]):
             id = dataframe["Drishti-GS File"].values[iFile][:-1]
             finding = dataframe["Total"].values[iFile].lower()
-            image_path = path_dataset + iPartition + id + ".png"
+            image_path = os.path.join(path_dataset, iPartition, id + ".png")
 
-            if os.path.isfile(PATH_DATASETS + image_path):
+            if os.path.isfile(os.path.join(PATH_DATASETS, image_path)):
                 data.append(
                     {
                         "image": image_path,
@@ -960,23 +986,25 @@ def adequate_19_drishtigs1():
                 )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_PRETRAIN + "19_Drishti-GS1.csv")
+    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "19_Drishti-GS1.csv"))
 
 
 def adequate_20_e_ophta():
-    path_dataset = "20_E-ophta/"
+    path_dataset = "20_E-ophta"
     labels = {"EX": "exudates", "healthy": "healthy", "MA": "microaneurysms"}
     subpath_images = [
-        "e_optha_EX/EX/",
-        "e_optha_EX/healthy/",
-        "e_optha_MA/MA/",
-        "e_optha_EX/healthy/",
+        os.path.join("e_optha_EX", "EX"),
+        os.path.join("e_optha_EX", "healthy"),
+        os.path.join("e_optha_MA", "MA"),
+        os.path.join("e_optha_EX", "healthy"),
     ]
 
     data = []
     for iSub in subpath_images:
         finding = labels[iSub.split("/")[-2]].replace("healthy", "normal")
-        for root, dirs, files in os.walk(PATH_DATASETS + path_dataset + iSub):
+        for root, dirs, files in os.walk(
+            os.path.join(PATH_DATASETS, path_dataset, iSub)
+        ):
             for filename in files:
                 if filename != "Thumbs.db":
                     print(os.path.join(root, filename))
@@ -992,116 +1020,120 @@ def adequate_20_e_ophta():
                     )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_PRETRAIN + "20_E-ophta.csv")
+    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "20_E-ophta.csv"))
 
 
 def adequate_21_g1020():
-    path_dataset = "21_G1020/"
-    image_subpath = "Images/"
+    path_dataset = "21_G1020"
+    image_subpath = "Images"
     labels = {0: "normal", 1: "glaucoma"}
-    dataframe = pd.read_csv(PATH_DATASETS + path_dataset + "G1020.csv")
+    dataframe = pd.read_csv(os.path.join(PATH_DATASETS, path_dataset, "G1020.csv"))
 
     data = []
     for iFile in range(dataframe.shape[0]):
         id = dataframe["imageID"].values[iFile]
         finding = labels[dataframe["binaryLabels"].values[iFile]]
-        image_path = path_dataset + image_subpath + id
+        image_path = os.path.join(path_dataset, image_subpath, id)
 
-        if os.path.isfile(PATH_DATASETS + image_path):
+        if os.path.isfile(os.path.join(PATH_DATASETS, image_path)):
             data.append({"image": image_path, "atributes": [], "categories": [finding]})
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_PRETRAIN + "21_G1020.csv")
+    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "21_G1020.csv"))
 
 
 def adequate_22_heimed():
-    path_dataset = "22_HEI-MED/"
+    path_dataset = "22_HEI-MED"
 
     data = []
     return 1
 
 
 def adequate_23_hrf():
-    path_dataset = "23_HRF/"
+    path_dataset = "23_HRF"
     data = []
 
     # Disease
-    image_subpath = "documents/"
+    image_subpath = "documents"
     labels = {"dr": "diabetic retinopathy", "g": "glaucoma", "h": "normal"}
-    files = os.listdir(PATH_DATASETS + path_dataset + image_subpath)
+    files = os.listdir(os.path.join(PATH_DATASETS, path_dataset, image_subpath))
 
     for iFile in files:
         data.append(
             {
-                "image": path_dataset + image_subpath + iFile,
+                "image": os.path.join(path_dataset, image_subpath, iFile),
                 "atributes": [],
                 "categories": [labels[iFile.split("_")[-1].split(".")[0]]],
             }
         )
 
     # Noise
-    image_subpath = "Noise/"
+    image_subpath = "Noise"
     labels = {"bad": "noisy", "good": "clean"}
-    files = os.listdir(PATH_DATASETS + path_dataset + image_subpath)
+    files = os.listdir(os.path.join(PATH_DATASETS, path_dataset, image_subpath))
 
     for iFile in files:
         data.append(
             {
-                "image": path_dataset + image_subpath + iFile,
+                "image": os.path.join(path_dataset, image_subpath, iFile),
                 "atributes": [labels[iFile.split("_")[-1].split(".")[0]]],
                 "categories": [],
             }
         )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_PRETRAIN + "23_HRF.csv")
+    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "23_HRF.csv"))
 
 
 def adequate_24_origa():
-    path_dataset = "24_ORIGA/"
-    image_subpath = "Images/"
+    path_dataset = "24_ORIGA"
+    image_subpath = "Images"
     labels = {0: "no glaucoma", 1: "glaucoma"}
-    dataframe = pd.read_csv(PATH_DATASETS + path_dataset + "OrigaList.csv")
+    dataframe = pd.read_csv(os.path.join(PATH_DATASETS, path_dataset, "OrigaList.csv"))
 
     data = []
     for iFile in range(dataframe.shape[0]):
         id = dataframe["Filename"].values[iFile]
         finding = labels[dataframe["Glaucoma"].values[iFile]]
-        image_path = path_dataset + image_subpath + id
+        image_path = os.path.join(path_dataset, image_subpath, id)
 
-        if os.path.isfile(PATH_DATASETS + image_path):
+        if os.path.isfile(os.path.join(PATH_DATASETS, image_path)):
             data.append({"image": image_path, "atributes": [], "categories": [finding]})
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_PRETRAIN + "24_ORIGA.csv")
+    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "24_ORIGA.csv"))
 
 
 def adequate_25_refuge():
-    path_dataset = "25_REFUGE/"
+    path_dataset = "25_REFUGE"
     data = []
 
     # Disease
-    image_subpath = "train/Images/"  # We only have labels for train subset
+    image_subpath = os.path.join(
+        "train", "Images"
+    )  # We only have labels for train subset
     labels = {"g": "glaucoma", "n": "no glaucoma"}
-    files = os.listdir(PATH_DATASETS + path_dataset + image_subpath)
+    files = os.listdir(os.path.join(PATH_DATASETS, path_dataset, image_subpath))
 
     for iFile in files:
         data.append(
             {
-                "image": path_dataset + image_subpath + iFile,
+                "image": os.path.join(path_dataset, image_subpath, iFile),
                 "atributes": [],
                 "categories": [labels[iFile[0]]],
             }
         )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_TRANSFERABILITY_CLASSIFICATION + "25_REFUGE.csv")
+    df_out.to_csv(
+        os.path.join(PATH_DATAFRAME_TRANSFERABILITY_CLASSIFICATION, "25_REFUGE.csv")
+    )
 
 
 def adequate_26_roc():
-    path_dataset = "26_ROC/"
+    path_dataset = "26_ROC"
 
-    files = glob.glob(PATH_DATASETS + path_dataset + "*/*/*.jpg")
+    files = glob.glob(os.path.join(PATH_DATASETS, path_dataset, "*", "*", "*.jpg"))
     data = []
     for iFile in files:
         data.append(
@@ -1113,13 +1145,13 @@ def adequate_26_roc():
         )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_PRETRAIN + "26_ROC.csv")
+    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "26_ROC.csv"))
 
 
 def adequate_27_brset():
-    path_dataset = "27_BRSET/"
-    image_subpath = "fundus_photos/"
-    dataframe = pd.read_csv(PATH_DATASETS + path_dataset + "labels.csv")
+    path_dataset = "27_BRSET"
+    image_subpath = "fundus_photos"
+    dataframe = pd.read_csv(os.path.join(PATH_DATASETS, path_dataset, "labels.csv"))
 
     anatomical_dict = {"1": "normal", "2": "abnormal", "bv": ""}
     dr_dict = {
@@ -1190,18 +1222,18 @@ def adequate_27_brset():
             if dataframe[findings[i]].values[iFile] == 1:
                 categories.append(find_names[i])
 
-        image_path = path_dataset + image_subpath + id
-        if os.path.isfile(PATH_DATASETS + image_path):
+        image_path = os.path.join(path_dataset, image_subpath, id)
+        if os.path.isfile(os.path.join(PATH_DATASETS, image_path)):
             data.append(
                 {"image": image_path, "atributes": [], "categories": categories}
             )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_PRETRAIN + "27_BRSET.csv")
+    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "27_BRSET.csv"))
 
 
 def adequate_28_OIA():
-    path_dataset = "28_OIA-DDR/"
+    path_dataset = "28_OIA-DDR"
     data = []
     labels_dr = {
         0: "no diabetic retinopathy",
@@ -1212,15 +1244,17 @@ def adequate_28_OIA():
         5: "",
     }
 
-    subpath_grading = "DR_grading/"
-    subpath_segmentation = "lesion_segmentation/"
-    lesions_path = ["EX/", "HE/", "MA/", "SE/"]
+    subpath_grading = "DR_grading"
+    subpath_segmentation = "lesion_segmentation"
+    lesions_path = ["EX", "HE", "MA", "SE"]
     lesions = ["hard exudates", "haemorrhages", "microaneurysms", "soft exudates"]
     partitions = ["train", "test", "valid"]
 
     for iPartition in partitions:
         dataframe = pd.read_table(
-            PATH_DATASETS + path_dataset + subpath_grading + iPartition + ".txt",
+            os.path.join(
+                PATH_DATASETS, path_dataset, subpath_grading, iPartition, ".txt"
+            ),
             delimiter=" ",
             header=None,
         )
@@ -1229,8 +1263,8 @@ def adequate_28_OIA():
         for iFile in range(len(files)):
             categories, atributes = [], []
 
-            image_path = (
-                path_dataset + subpath_grading + iPartition + "/" + files[iFile]
+            image_path = os.path.join(
+                path_dataset, subpath_grading, iPartition, files[iFile]
             )
             categories.append(labels_dr[dataframe[1].values[iFile]])
 
@@ -1240,18 +1274,19 @@ def adequate_28_OIA():
             for i in range(len(lesions_path)):
                 for iiPartition in partitions:
                     if os.path.isfile(
-                        PATH_DATASETS
-                        + path_dataset
-                        + subpath_segmentation
-                        + iiPartition
-                        + "/"
-                        + "label/"
-                        + lesions_path[i]
-                        + files[iFile].replace(".jpg", ".tif")
+                        os.path.join(
+                            PATH_DATASETS,
+                            path_dataset,
+                            subpath_segmentation,
+                            iiPartition,
+                            "label",
+                            lesions_path[i],
+                            files[iFile].replace(".jpg", ".tif"),
+                        )
                     ):
                         categories.append(lesions[i])
 
-            if os.path.isfile(PATH_DATASETS + image_path):
+            if os.path.isfile(os.path.join(PATH_DATASETS, image_path)):
                 data.append(
                     {
                         "image": image_path,
@@ -1261,16 +1296,18 @@ def adequate_28_OIA():
                 )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_PRETRAIN + "28_OIA-DDR.csv")
+    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "28_OIA-DDR.csv"))
 
 
 def adequate_29_airogs():
-    path_dataset = "29_AIROGS/"
-    image_subpath = "documents/"  # We only have labels for train subset
+    path_dataset = "29_AIROGS"
+    image_subpath = "documents"  # We only have labels for train subset
     labels = {"RG": "glaucoma", "NRG": "no glaucoma"}
-    dataframe = pd.read_csv(PATH_DATASETS + path_dataset + "train_labels.csv")
+    dataframe = pd.read_csv(
+        os.path.join(PATH_DATASETS, path_dataset, "train_labels.csv")
+    )
 
-    files = os.listdir(PATH_DATASETS + path_dataset + image_subpath)
+    files = os.listdir(os.path.join(PATH_DATASETS, path_dataset, image_subpath))
 
     data = []
     for iFile in files[2:]:
@@ -1278,18 +1315,18 @@ def adequate_29_airogs():
         id = dataframe["challenge_id"] == iFile.split(".")[0]
 
         finding = labels[dataframe[id]["class"].values[0]]
-        image_path = path_dataset + image_subpath + iFile
+        image_path = os.path.join(path_dataset, image_subpath, iFile)
 
-        if os.path.isfile(PATH_DATASETS + image_path):
+        if os.path.isfile(os.path.join(PATH_DATASETS, image_path)):
             data.append({"image": image_path, "atributes": [], "categories": [finding]})
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_PRETRAIN + "29_AIROGS.csv")
+    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "29_AIROGS.csv"))
 
 
 def adequate_30_sustech():
-    path_dataset = "30_SUSTech-SYSU/"
-    image_subpath = "originalImages/"  # We only have labels for train subset
+    path_dataset = "30_SUSTech-SYSU"
+    image_subpath = "originalImages"  # We only have labels for train subset
     labels_dr = {
         0: "no diabetic retinopathy",
         1: "mild diabetic retinopathy",
@@ -1299,9 +1336,9 @@ def adequate_30_sustech():
         5: "",
     }
 
-    dataframe = pd.read_csv(PATH_DATASETS + path_dataset + "Labels.csv")
+    dataframe = pd.read_csv(os.path.join(PATH_DATASETS, path_dataset, "Labels.csv"))
 
-    files = os.listdir(PATH_DATASETS + path_dataset + image_subpath)
+    files = os.listdir(os.path.join(PATH_DATASETS, path_dataset, image_subpath))
 
     data = []
     for iFile in files:
@@ -1312,16 +1349,17 @@ def adequate_30_sustech():
             finding = labels_dr[
                 dataframe[id]["DR_grade_American_Academy_of_Ophthalmology"].values[0]
             ]
-            image_path = path_dataset + image_subpath + iFile
+            image_path = os.path.join(path_dataset, image_subpath, iFile)
 
             findings = [finding]
-            if os.path.isfile(PATH_DATASETS + image_path):
+            if os.path.isfile(os.path.join(PATH_DATASETS, image_path)):
                 if os.path.isfile(
-                    PATH_DATASETS
-                    + path_dataset
-                    + "exudatesLabels/"
-                    + iFile.split(".")[0]
-                    + ".xml"
+                    os.path.join(
+                        PATH_DATASETS,
+                        path_dataset,
+                        "exudatesLabels",
+                        iFile.split(".")[0] + ".xml",
+                    )
                 ):
                     findings.append("exudates")
 
@@ -1330,12 +1368,12 @@ def adequate_30_sustech():
                 )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_PRETRAIN + "30_SUSTech-SYSU.csv")
+    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "30_SUSTech-SYSU.csv"))
 
 
 def adequate_31_jichi():
-    path_dataset = "31_JICHI/"
-    image_subpath = "documents/"  # We only have labels for train subset
+    path_dataset = "31_JICHI"
+    image_subpath = "documents"  # We only have labels for train subset
     labels_dr = {
         "ndr": ["no diabetic retinopathy"],
         "sdr": [
@@ -1359,9 +1397,9 @@ def adequate_31_jichi():
         ],
     }
 
-    dataframe = pd.read_csv(PATH_DATASETS + path_dataset + "list.csv")
+    dataframe = pd.read_csv(os.path.join(PATH_DATASETS, path_dataset, "list.csv"))
 
-    files = os.listdir(PATH_DATASETS + path_dataset + image_subpath)
+    files = os.listdir(os.path.join(PATH_DATASETS, path_dataset, image_subpath))
 
     data = []
     for iFile in files:
@@ -1370,49 +1408,49 @@ def adequate_31_jichi():
 
         if np.argwhere(id.values).__len__() > 0:
             finding = labels_dr[dataframe[id]["Davis_grading_of_one_figure"].values[0]]
-            image_path = path_dataset + image_subpath + iFile
+            image_path = os.path.join(path_dataset, image_subpath, iFile)
 
-            if os.path.isfile(PATH_DATASETS + image_path):
+            if os.path.isfile(os.path.join(PATH_DATASETS, image_path)):
                 data.append(
                     {"image": image_path, "atributes": [], "categories": finding}
                 )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_PRETRAIN + "31_JICHI.csv")
+    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "31_JICHI.csv"))
 
 
 def adequate_32_chaksu():
-    path_dataset = "32_CHAKSU/"
-    subpaths = ["Train/", "Test/"]
+    path_dataset = "32_CHAKSU"
+    subpaths = ["Train", "Test"]
     data = []
     scanners = ["Bosch", "Forus", "Remidio"]
     dataframe_id = "Glaucoma_Decision_Comparison_[SCAN]_majority.csv"
-    path_images = "1.0_Original_Fundus_Images/"
+    path_images = "1.0_Original_Fundus_Images"
     labels = {"NORMAL": "no glaucoma", "GLAUCOMA SUSPECT": "glaucoma"}
     formats = {"Bosch": ".JPG", "Forus": ".png", "Remidio": ".jpg"}
 
     for iSubpath in subpaths:
         for iScanner in scanners:
             dataframe = pd.read_csv(
-                PATH_DATASETS
-                + path_dataset
-                + iSubpath
-                + dataframe_id.replace("[SCAN]", iScanner)
+                os.path.join(
+                    PATH_DATASETS,
+                    path_dataset,
+                    iSubpath,
+                    dataframe_id.replace("[SCAN]", iScanner),
+                )
             )
             files = dataframe["Images"].values.tolist()
 
             for iFile in files:
-                image_path = (
-                    path_dataset
-                    + iSubpath
-                    + path_images
-                    + iScanner
-                    + "/"
-                    + iFile.split(".")[0]
-                    + formats[iScanner]
+                image_path = os.path.join(
+                    path_dataset,
+                    iSubpath,
+                    path_images,
+                    iScanner,
+                    iFile.split(".")[0] + formats[iScanner],
                 )
 
-                if os.path.isfile(PATH_DATASETS + image_path):
+                if os.path.isfile(os.path.join(PATH_DATASETS, image_path)):
                     if "Majority Decision" in list(dataframe.keys()):
                         ky = "Majority Decision"
                     else:
@@ -1427,11 +1465,11 @@ def adequate_32_chaksu():
                     )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_PRETRAIN + "32_CHAKSU.csv")
+    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "32_CHAKSU.csv"))
 
 
 def adequate_33_dr():
-    path_dataset = "33_DR1-2/"
+    path_dataset = "33_DR1-2"
     subpaths = [
         "Cotton-wool Spots",
         "Deep Hemorrhages",
@@ -1452,21 +1490,21 @@ def adequate_33_dr():
     }
     data = []
     for iPath in subpaths:
-        files = os.listdir(PATH_DATASETS + path_dataset + iPath + "/")
+        files = os.listdir(os.path.join(PATH_DATASETS, path_dataset, iPath, "/"))
 
         for iFile in files:
-            image_path = path_dataset + iPath + "/" + iFile
+            image_path = os.path.join(path_dataset, iPath, iFile)
 
             data.append(
                 {"image": image_path, "atributes": [], "categories": [transfer[iPath]]}
             )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_PRETRAIN + "33_DR1-2.csv")
+    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "33_DR1-2.csv"))
 
 
 def adequate_34_cataract():
-    path_dataset = "34_Cataract/"
+    path_dataset = "34_Cataract"
     subpaths = ["1_normal", "2_cataract", "2_glaucoma", "3_retina_disease"]
     transfer = {
         "1_normal": "normal",
@@ -1476,32 +1514,32 @@ def adequate_34_cataract():
     }
     data = []
     for iPath in subpaths:
-        files = os.listdir(PATH_DATASETS + path_dataset + iPath + "/")
+        files = os.listdir(os.path.join(PATH_DATASETS, path_dataset, iPath, "/"))
 
         for iFile in files:
-            image_path = path_dataset + iPath + "/" + iFile
+            image_path = os.path.join(path_dataset, iPath, iFile)
 
             data.append(
                 {"image": image_path, "atributes": [], "categories": [transfer[iPath]]}
             )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_PRETRAIN + "34_Cataract.csv")
+    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "34_Cataract.csv"))
 
 
 def adequate_35_scardat():
-    path_dataset = "35_ScarDat/"
-    subpaths = ["train/", "val/", "test/"]
-    subsubsubpaths = ["positive/", "negative/"]
+    path_dataset = "35_ScarDat"
+    subpaths = ["train", "val", "test"]
+    subsubsubpaths = ["positive", "negative"]
 
-    transfer = {"positive/": "laser scar", "negative/": "no laser scar"}
+    transfer = {"positive": "laser scar", "negative": "no laser scar"}
     data = []
     for iPath in subpaths:
         for iiPath in subsubsubpaths:
-            files = os.listdir(PATH_DATASETS + path_dataset + iPath + iiPath)
+            files = os.listdir(os.path.join(PATH_DATASETS, path_dataset, iPath, iiPath))
 
             for iFile in files:
-                image_path = path_dataset + iPath + iiPath + iFile
+                image_path = os.path.join(path_dataset, iPath, iiPath, iFile)
 
                 data.append(
                     {
@@ -1512,33 +1550,35 @@ def adequate_35_scardat():
                 )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_PRETRAIN + "35_ScarDat.csv")
+    df_out.to_csv(os.path.join(PATH_DATAFRAME_PRETRAIN, "35_ScarDat.csv"))
 
 
 def adequate_36_acrima():
-    path_dataset = "36_ACRIMA/"
-    subpaths = ["G/", "noG/"]
-    transfer = {"G/": "glaucoma", "noG/": "no glaucoma"}
+    path_dataset = "36_ACRIMA"
+    subpaths = ["G", "noG"]
+    transfer = {"G": "glaucoma", "noG": "no glaucoma"}
 
     data = []
     for iPath in subpaths:
-        files = os.listdir(PATH_DATASETS + path_dataset + iPath)
+        files = os.listdir(os.path.join(PATH_DATASETS, path_dataset, iPath))
 
         for iFile in files:
-            image_path = path_dataset + iPath + iFile
+            image_path = os.path.join(path_dataset, iPath, iFile)
 
             data.append(
                 {"image": image_path, "atributes": [], "categories": [transfer[iPath]]}
             )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_TRANSFERABILITY_CLASSIFICATION + "36_ACRIMA.csv")
+    df_out.to_csv(
+        os.path.join(PATH_DATAFRAME_TRANSFERABILITY_CLASSIFICATION, "36_ACRIMA.csv")
+    )
 
 
 def adequate_37_DeepDRiD():
-    path_dataset = "37_DeepDRiD/"
-    subpath = "regular_fundus_images/"
-    paritions_path = ["regular-fundus-training/", "regular-fundus-validation/"]
+    path_dataset = "37_DeepDRiD"
+    subpath = "regular_fundus_images"
+    paritions_path = ["regular-fundus-training", "regular-fundus-validation"]
     paritions = ["train", "val"]
 
     labels_dr = {
@@ -1552,12 +1592,13 @@ def adequate_37_DeepDRiD():
     data = []
     for i in range(0, len(paritions)):
         dataframe = pd.read_csv(
-            PATH_DATASETS
-            + path_dataset
-            + subpath
-            + paritions_path[i]
-            + paritions_path[i][:-1]
-            + ".csv"
+            os.path.join(
+                PATH_DATASETS,
+                path_dataset,
+                subpath,
+                paritions_path[i],
+                paritions_path[i][:-1] + ".csv",
+            )
         )
         for ii in range(dataframe.shape[0]):
             iFile = (
@@ -1570,11 +1611,15 @@ def adequate_37_DeepDRiD():
             )
 
             if os.path.isfile(
-                PATH_DATASETS + path_dataset + subpath + paritions_path[i] + iFile
+                os.path.join(
+                    PATH_DATASETS, path_dataset, subpath, paritions_path[i], iFile
+                )
             ):
                 data.append(
                     {
-                        "image": path_dataset + subpath + paritions_path[i] + iFile,
+                        "image": os.path.join(
+                            path_dataset, subpath, paritions_path[i], iFile
+                        ),
                         "atributes": [],
                         "categories": [labels_dr[int(dr)]],
                     }
@@ -1582,29 +1627,29 @@ def adequate_37_DeepDRiD():
 
     df_out = pd.DataFrame(data)
     df_out.to_csv(
-        PATH_DATAFRAME_TRANSFERABILITY_CLASSIFICATION + "37_DeepDRiD_train_eval.csv"
+        os.path.join(
+            PATH_DATAFRAME_TRANSFERABILITY_CLASSIFICATION, "37_DeepDRiD_train_eval.csv"
+        )
     )
 
-    subsubpath = "regular_fundus_images/Online-Challenge1&2-Evaluation/"
+    subsubpath = os.path.join("regular_fundus_images", "Online-Challenge1&2-Evaluation")
     dataframe = pd.read_csv(
-        PATH_DATASETS + path_dataset + subsubpath + "Challenge1_labels.csv"
+        os.path.join(PATH_DATASETS, path_dataset, subsubpath, "Challenge1_labels.csv")
     )
 
     data = []
     for ii in range(dataframe.shape[0]):
-        iFile = (
-            "Images/"
-            + dataframe["image_id"][ii].split("_")[0]
-            + "/"
-            + dataframe["image_id"][ii]
-            + ".jpg"
+        iFile = os.path.join(
+            "Images",
+            dataframe["image_id"][ii].split("_")[0],
+            dataframe["image_id"][ii] + ".jpg",
         )
         dr = dataframe["DR_Levels"][ii]
 
-        if os.path.isfile(PATH_DATASETS + path_dataset + subsubpath + iFile):
+        if os.path.isfile(os.path.join(PATH_DATASETS, path_dataset, subsubpath, iFile)):
             data.append(
                 {
-                    "image": path_dataset + subsubpath + iFile,
+                    "image": os.path.join(path_dataset, subsubpath, iFile),
                     "atributes": [],
                     "categories": [labels_dr[int(dr)]],
                 }
@@ -1612,20 +1657,24 @@ def adequate_37_DeepDRiD():
 
     df_out = pd.DataFrame(data)
     df_out.to_csv(
-        PATH_DATAFRAME_TRANSFERABILITY_CLASSIFICATION + "37_DeepDRiD_test.csv"
+        os.path.join(
+            PATH_DATAFRAME_TRANSFERABILITY_CLASSIFICATION, "37_DeepDRiD_test.csv"
+        )
     )
 
 
 def adequate_CGI_HRDC():
     # TASK 1
-    path_dataset = "102_CGI-HRDC/"
-    subpath = "1-Hypertensive Classification/"
-    subpath_images = "1-Images/1-Training Set/"
-    dataframe_train = (
-        "2-Groundtruths/HRDC Hypertensive Classification Training Labels.csv"
+    path_dataset = "102_CGI-HRDC"
+    subpath = "1-Hypertensive Classification"
+    subpath_images = os.path.join("1-Images", "1-Training Set")
+    dataframe_train = os.path.join(
+        "2-Groundtruths", "HRDC Hypertensive Classification Training Labels.csv"
     )
 
-    dataframe = pd.read_csv(PATH_DATASETS + path_dataset + subpath + dataframe_train)
+    dataframe = pd.read_csv(
+        os.path.join(PATH_DATASETS, path_dataset, subpath, dataframe_train)
+    )
 
     labels_dr = {0: "no hypertensive", 1: "hypertensive"}
     data = []
@@ -1634,26 +1683,33 @@ def adequate_CGI_HRDC():
         dr = dataframe["Hypertensive"][i]
 
         if os.path.isfile(
-            PATH_DATASETS + path_dataset + subpath + subpath_images + iFile
+            os.path.join(PATH_DATASETS, path_dataset, subpath, subpath_images, iFile)
         ):
             data.append(
                 {
-                    "image": path_dataset + subpath + subpath_images + iFile,
+                    "image": os.path.join(path_dataset, subpath, subpath_images, iFile),
                     "atributes": [],
                     "categories": [labels_dr[int(dr)]],
                 }
             )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_TRANSFERABILITY_SEGMENTATION + "CGI_HRDC_Task1.csv")
+    df_out.to_csv(
+        os.path.join(PATH_DATAFRAME_TRANSFERABILITY_SEGMENTATION, "CGI_HRDC_Task1.csv")
+    )
 
     # TASK 2
-    path_dataset = "102_CGI-HRDC/"
-    subpath = "2-Hypertensive Retinopathy Classification/"
-    subpath_images = "1-Images/1-Training Set/"
-    dataframe_train = "2-Groundtruths/HRDC Hypertensive Retinopathy Classification Training Labels.csv"
+    path_dataset = "102_CGI-HRDC"
+    subpath = "2-Hypertensive Retinopathy Classification"
+    subpath_images = os.path.join("1-Images", "1-Training Set")
+    dataframe_train = os.path.join(
+        "2-Groundtruths",
+        "HRDC Hypertensive Retinopathy Classification Training Labels.csv",
+    )
 
-    dataframe = pd.read_csv(PATH_DATASETS + path_dataset + subpath + dataframe_train)
+    dataframe = pd.read_csv(
+        os.path.join(PATH_DATASETS, path_dataset, subpath, dataframe_train)
+    )
 
     labels_dr = {0: "no hypertensive retinopathy", 1: "hypertensive retinopathy"}
     data = []
@@ -1662,21 +1718,23 @@ def adequate_CGI_HRDC():
         dr = dataframe["Hypertensive Retinopathy"][i]
 
         if os.path.isfile(
-            PATH_DATASETS + path_dataset + subpath + subpath_images + iFile
+            os.path.join(PATH_DATASETS, path_dataset, subpath, subpath_images, iFile)
         ):
             data.append(
                 {
-                    "image": path_dataset + subpath + subpath_images + iFile,
+                    "image": os.path.join(path_dataset, subpath, subpath_images, iFile),
                     "atributes": [],
                     "categories": [labels_dr[int(dr)]],
                 }
             )
 
     df_out = pd.DataFrame(data)
-    df_out.to_csv(PATH_DATAFRAME_TRANSFERABILITY_SEGMENTATION + "CGI_HRDC_Task2.csv")
+    df_out.to_csv(
+        os.path.join(PATH_DATAFRAME_TRANSFERABILITY_SEGMENTATION, "CGI_HRDC_Task2.csv")
+    )
 
 
-def prepare_datasets():
+def prepare_datasets(dataframe_output_folder: str, datasets_folder: str):
     """Call the functions to prepare the pretraining datasets."""
     if not os.path.exists(PATH_DATAFRAME_PRETRAIN):
         os.mkdir(PATH_DATAFRAME_PRETRAIN)
